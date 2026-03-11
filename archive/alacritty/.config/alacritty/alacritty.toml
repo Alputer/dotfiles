@@ -1,0 +1,73 @@
+# $XDG_CONFIG_HOME/alacritty/alacritty.toml
+
+[general]
+
+# A popular color palette https://github.com/catppuccin/alacritty
+import = ["~/dotfiles/alacritty/catppuccin/catppuccin-macchiato.toml"]
+
+[env]
+TERM="xterm-256color"
+
+[window]
+
+# dimensions = { columns = 70, lines = 25 }
+padding = { x = 4 , y = 2 } 
+
+# [scrolling]
+
+[font]
+
+size = 16.5
+
+normal = { family = "JetBrainsMono Nerd Font", style = "Medium" }
+
+bold = { family = "JetBrainsMono Nerd Font", style = "Heavy" }
+
+italic = { family = "JetBrainsMono Nerd Font", style = "Medium Italic" }
+
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "Heavy Italic" }
+
+
+# [colors]
+# [bell]
+#[selection]
+#save_to_clipboard = true
+
+[cursor]
+
+style = { shape = "Beam", blinking = "On" }
+
+[terminal]
+
+# shell = { program = "/bin/zsh", args = ["-l"] }
+
+# [mouse]
+# [hints]
+[keyboard]
+bindings = [
+	# Copy (Ctrl + C)
+	# { key = "C", mods = "Control", action = "Copy" },
+	
+	# Paste (Ctrl + V)
+	# { key = "V", mods = "Control", action = "Paste" },
+
+	# Find (Ctrl + F)
+	#{ key = "F", mods = "Control", action = "SearchForward" },
+
+	# New Window (Ctrl + N)
+	# { key = "N", mods = "Control", action = "CreateNewWindow" },
+
+	# Increase Font Size (Ctrl + =)
+	# { key = "+", mods = "Control", action = "IncreaseFontSize" },
+
+	# Increase Font Size (Ctrl + -)
+	# { key = "-", mods = "Control", action = "DecreaseFontSize" },
+
+	# Hide Alacritty (Ctrl + H)
+	#{ key = "H", mods = "Control", action = "Hide" },
+	
+	# Hide Other Applications (Ctrl + Alt + H)
+	# { key = "H", mods = "Control|Alt", action = "HideOtherApplications" },
+]
+
+# [debug]

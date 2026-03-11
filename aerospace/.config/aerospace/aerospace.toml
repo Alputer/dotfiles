@@ -1,0 +1,190 @@
+ after-login-command = []
+  
+ after-startup-command = [
+  "exec-and-forget borders"
+]
+
+# 'after-startup-command' is run after 'after-login-command'
+exec-on-workspace-change = []
+
+start-at-login = true
+
+# Normalization keeps the window tree clean
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Mouse follows focus across monitors
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Prevent accidental cmd-h hiding apps (common annoyance with tiling WMs)
+automatically-unhide-macos-hidden-apps = true
+
+[key-mapping]
+    preset = 'qwerty'
+
+[gaps]
+    inner.horizontal = 4
+    inner.vertical =   4
+    outer.left =       6
+    outer.bottom =     6
+    outer.top =        6
+    outer.right =      6
+
+# ──────────────────────────────────────────────
+# MAIN BINDINGS — All use Ctrl+Alt (Caps Lock)
+# ──────────────────────────────────────────────
+[mode.main.binding]
+
+    # Layout toggles
+    ctrl-alt-slash   = 'layout tiles horizontal vertical'
+    ctrl-alt-comma   = 'layout accordion horizontal vertical'
+    ctrl-shift-space = 'layout floating tiling'
+
+    # Vim-style focus (h/j/k/l)
+    ctrl-alt-h = 'focus left'
+    ctrl-alt-j = 'focus down'
+    ctrl-alt-k = 'focus up'
+    ctrl-alt-l = 'focus right'
+    ctrl-alt-left = 'focus left'
+    ctrl-alt-down = 'focus down'
+    ctrl-alt-up = 'focus up'
+    ctrl-alt-right = 'focus right'
+
+    # Move windows (add Shift)
+    ctrl-alt-shift-h = 'move left'
+    ctrl-alt-shift-j = 'move down'
+    ctrl-alt-shift-k = 'move up'
+    ctrl-alt-shift-l = 'move right'
+    ctrl-alt-shift-left = 'move left'
+    ctrl-alt-shift-down = 'move down'
+    ctrl-alt-shift-up = 'move up'
+    ctrl-alt-shift-right = 'move right'
+
+    # Numbered workspaces (1-9)
+    ctrl-alt-1 = 'workspace 1'
+    ctrl-alt-2 = 'workspace 2'
+    ctrl-alt-3 = 'workspace 3'
+    ctrl-alt-4 = 'workspace 4'
+    ctrl-alt-5 = 'workspace 5'
+    ctrl-alt-6 = 'workspace 6'
+    ctrl-alt-7 = 'workspace 7'
+    ctrl-alt-8 = 'workspace 8'
+    ctrl-alt-9 = 'workspace 9'
+
+    # Named workspaces — assign letters for quick access
+    ctrl-alt-e = 'workspace e'   # Email
+    ctrl-alt-m = 'workspace m'   # Messages
+    ctrl-alt-c = 'workspace c'   # Calendar
+    ctrl-alt-b = 'workspace b'   # Main project
+    ctrl-alt-s = 'workspace s'   # Slack/Discord
+    ctrl-alt-z = 'workspace z'   # Secondary project
+
+    # Move window to workspace (add Shift)
+    ctrl-alt-shift-1 = 'move-node-to-workspace 1'
+    ctrl-alt-shift-2 = 'move-node-to-workspace 2'
+    ctrl-alt-shift-3 = 'move-node-to-workspace 3'
+    ctrl-alt-shift-4 = 'move-node-to-workspace 4'
+    ctrl-alt-shift-5 = 'move-node-to-workspace 5'
+    ctrl-alt-shift-6 = 'move-node-to-workspace 6'
+    ctrl-alt-shift-7 = 'move-node-to-workspace 7'
+    ctrl-alt-shift-8 = 'move-node-to-workspace 8'
+    ctrl-alt-shift-9 = 'move-node-to-workspace 9'
+    ctrl-alt-shift-e = 'move-node-to-workspace e'
+    ctrl-alt-shift-m = 'move-node-to-workspace m'
+    ctrl-alt-shift-c = 'move-node-to-workspace c'
+    ctrl-alt-shift-b = 'move-node-to-workspace b'
+    ctrl-alt-shift-s = 'move-node-to-workspace s'
+    ctrl-alt-shift-z = 'move-node-to-workspace z'
+
+    # Workspace navigation
+    ctrl-alt-tab = 'workspace-back-and-forth'
+    ctrl-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+    # Join windows into containers (like i3 grouping)
+    ctrl-alt-cmd-h = 'join-with left'
+    ctrl-alt-cmd-j = 'join-with down'
+    ctrl-alt-cmd-k = 'join-with up'
+    ctrl-alt-cmd-l = 'join-with right'
+    ctrl-alt-cmd-left = 'join-with left'
+    ctrl-alt-cmd-down = 'join-with down'
+    ctrl-alt-cmd-up = 'join-with up'
+    ctrl-alt-cmd-right = 'join-with right'
+    
+    # Window management
+    ctrl-alt-f = 'fullscreen'
+    ctrl-alt-q = 'close'
+    ctrl-alt-enter = 'exec-and-forget open -na wezterm'
+
+    # Config reload
+    ctrl-alt-esc = [ 'reload-config', 'mode main' ]
+
+    # Disable macOS hide (conflicts with tiling)
+    cmd-h = []
+    cmd-alt-h = []
+
+    # Enter modal modes
+    ctrl-alt-w = 'mode resize'
+    ctrl-alt-a = 'mode apps'
+
+[workspace-to-monitor-force-assignment]
+    1 = ['MSI MP271', 'built-in']
+    2 = ['MSI MP271', 'built-in']
+    3 = ['MSI MP271', 'built-in']
+    4 = ['MSI MP271', 'built-in']
+    5 = ['MSI MP271', 'built-in']
+    6 = ['MSI MP271', 'built-in']
+    7 = ['MSI MP271', 'built-in']
+    8 = ['MSI MP271', 'built-in']
+    9 = ['MSI MP271', 'built-in']
+    e = ['MSI MP271', 'built-in']
+    c = ['MSI MP271', 'built-in']
+    b = ['MSI MP271', 'built-in']
+    z = ['MSI MP271', 'built-in']
+    s = ['MSI MP271', 'built-in']
+    m = ['MSI MP271', 'built-in']
+
+[mode.resize.binding]
+
+    # Vim keys and arrow keys
+    h = 'resize width -50'
+    j = 'resize height +50'
+    k = 'resize height -50'
+    l = 'resize width +50'
+    left  = 'resize width -50'
+    down  = 'resize height +50'
+    up    = 'resize height -50'
+    right = 'resize width +50'
+
+    # Exit resize mode
+    enter = 'mode main'
+    esc   = 'mode main'
+
+# ──────────────────────────────────────────
+# APPS MODE — Quick-launch apps
+# ──────────────────────────────────────────
+[mode.apps.binding]
+    m = ['workspace m', 'exec-and-forget open -a "Messages"', 'mode main']
+    w = ['workspace m', 'exec-and-forget open -a "WhatsApp"', 'mode main']
+    s = ['workspace s', 'exec-and-forget open -a "Slack"', 'mode main']
+    t = ['workspace m', 'exec-and-forget open -a "Telegram"', 'mode main']
+    d = ['workspace s', 'exec-and-forget open -a "Discord"', 'mode main']
+    c = ['workspace c', 'exec-and-forget open -a "Calendar"', 'mode main']
+    ctrl-alt-esc = [ 'reload-config', 'mode main' ]
+
+
+# Floating windows for system apps
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.ActivityMonitor'
+run = 'layout floating'

@@ -1,0 +1,11 @@
+
+# Track only ssh config
+ssh/.ssh/*
+!ssh/.ssh/config
+
+# Track only zsh config, not artifacts
+zsh/*
+!zsh/.zshrc
+
+# Neovim artifact?
+.local

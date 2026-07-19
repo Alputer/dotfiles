@@ -1,0 +1,65 @@
+tap 'nikitabobko/tap'
+
+# Core build tools
+brew 'autoconf'
+brew 'automake'
+brew 'pkg-config'
+brew 'libtool'
+
+# Security / networking libraries
+brew 'libffi'
+brew 'openssl@3'
+brew 'zlib'
+
+# Data formats / parsers
+brew 'gmp'
+brew 'libyaml'
+brew 'readline'
+
+# Common CLI utilities & Others
+brew 'bat'
+brew 'colima'
+brew 'container'
+brew 'curl'
+brew 'docker'
+brew 'eza'
+brew 'fd'
+brew 'fzf'
+brew 'fish'
+brew 'git'
+brew 'go'
+brew 'htop'
+brew 'jq'
+brew 'kanata'
+brew 'lazygit'
+brew 'lua'
+brew 'luarocks'
+brew 'mas'
+brew 'mise'
+brew 'node'
+brew 'neovim'
+brew 'python'
+brew 'ripgrep'
+brew 'rust'
+brew 'stow'
+brew 'stylua'
+brew 'tldr'
+brew 'tree-sitter'
+
+# Nerd Fonts
+cask 'font-jetbrains-mono-nerd-font'
+
+cask 'aerospace'
+cask 'brave-browser'
+cask 'cursor'
+cask 'docker-desktop'
+cask 'obsidian'
+cask 'postman'
+cask 'raycast'
+cask 'slack'
+cask 'visual-studio-code'
+cask 'wezterm'
+cask 'whatsapp'
+cask 'zoom'
+
+mas "Xcode", id: 497799835

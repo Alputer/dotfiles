@@ -1,6 +1,6 @@
 # Dotfiles
 
-macOS setup for a fresh machine: Xcode, Homebrew, mise, SSH, then GNU Stow.
+macOS setup for a fresh machine: Xcode, Homebrew, mise, SSH, GNU Stow, then Kanata.
 
 ## Prerequisites
 
@@ -109,6 +109,10 @@ mise install
 ```
 
 `Brewfile` installs CLI tools, casks, and fonts. `mise install` installs the versions declared in `mise/.config/mise.toml` (already linked to `~/.config/mise.toml` after stowing).
+
+## 7. Set up Kanata
+
+See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
 ## Packages
 

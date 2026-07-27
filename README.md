@@ -114,6 +114,12 @@ mise install
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
+After changing `~/.config/kanata/kanata.kbd`, restart the daemon:
+
+```bash
+sudo launchctl kickstart -k system/com.kanata.daemon
+```
+
 ## Packages
 
 | Package     | Links into                       |

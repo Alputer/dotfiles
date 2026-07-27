@@ -7,11 +7,23 @@
 
 (defcfg
   process-unmapped-keys yes
+  ;; From `kanata --list`. Name-based matching is preferred over hashes
+  ;; when Karabiner's virtual HID device is present (hashes can change).
+  ;; Do not include Karabiner DriverKit VirtualHIDKeyboard — that can loop.
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+    "MX Keys Mini B"
+  )
+  ;; Keep running if the BT keyboard isn't connected yet; grab it on connect.
+  macos-continue-if-no-devs-found yes
 )
 
 (defsrc
   caps
   a s d f j k l ;
+  ;; ISO § (grave position) ↔ backtick (non-US backslash), same as old Karabiner swap
+  grv
+  nonusbslash
 )
 
 (defvar
@@ -34,11 +46,18 @@
 (deflayer base
   esc
   @a @s @d @f @j @k @l @;
+  nonusbslash
+  grv
 )
 
+;; Plain letters while rolling, but keep shift so CamelCase (jD, jK) works
+;; without waiting for the idle return to base. Longer hold-time than base
+;; to avoid accidental shifts during fast typing.
 (deflayer nomods
   esc
-  a s d f j k l ;
+  a s @dsft f j @ksft l ;
+  nonusbslash
+  grv
 )
 
 (deffakekeys
@@ -50,6 +69,11 @@
     (layer-switch nomods)
     (on-idle-fakekey to-base tap 20)
   )
+
+  ;; Shift-only tap-holds for the nomods (fast-typing) layer.
+  ;; Plain tap-hold (no early hold) so rolls stay letters; hold ~300ms for shift.
+  dsft (tap-hold $tap-time 300 d lsft)
+  ksft (tap-hold $tap-time 300 k rsft)
 
   a (tap-hold-release-keys $tap-time $hold-time (multi a @tap) lctl $left-hand-keys)
   s (tap-hold-release-keys $tap-time $hold-time (multi s @tap) lalt $left-hand-keys)

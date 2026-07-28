@@ -7,17 +7,12 @@ start-at-login = true
 # After setting this to true, reload once manually to start the auto-reloading
 auto-reload-config = false
 
-[gaps]
-inner.horizontal = 8
-inner.vertical = 8
-outer.left = 8
-outer.bottom = 8
-outer.top = 8
-outer.right = 8
-
 persistent-workspaces = ['B', 'S', 'C', 'T']
 
 after-startup-command = [
+    # JankyBorders has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    'exec-and-forget borders',
     'exec-and-forget open -a "Brave Browser"',
     'exec-and-forget open -a Slack',
     'exec-and-forget open -a Cursor',
@@ -46,6 +41,14 @@ on-window-detected = [
         run = 'move-node-to-workspace T',
     },
 ]
+
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
 
 [mode.main.binding]
 alt-h = 'focus left'

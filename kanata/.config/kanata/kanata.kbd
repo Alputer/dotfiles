@@ -29,6 +29,10 @@
   nonusbslash
   fn
   lctl
+  ;; Left Command → Tab; Right Command → Backspace; Right Option → Delete
+  lmet
+  rmet
+  ralt
 )
 
 (defvar
@@ -57,6 +61,9 @@
   grv
   @fnmed
   @med
+  tab
+  bspc
+  del
 )
 
 ;; Plain letters while rolling, but keep shift so CamelCase (jD, jK) works
@@ -71,6 +78,9 @@
   grv
   @fnmed
   @med
+  tab
+  bspc
+  del
 )
 
 ;; Hold fn or left ctrl: sleep on q; playback on y u i; mute/vol/brightness on g h j k l
@@ -83,6 +93,9 @@
   _
   _
   _
+  tab
+  bspc
+  del
 )
 
 (deffakekeys

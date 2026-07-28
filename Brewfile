@@ -1,4 +1,5 @@
 tap 'nikitabobko/tap'
+tap 'FelixKratz/formulae'
 
 # Core build tools
 brew 'autoconf'
@@ -18,6 +19,7 @@ brew 'readline'
 
 # Common CLI utilities & Others
 brew 'bat'
+brew 'borders'
 brew 'colima'
 brew 'container'
 brew 'curl'
@@ -53,6 +55,7 @@ cask 'aerospace'
 cask 'brave-browser'
 cask 'cursor'
 cask 'docker-desktop'
+cask 'notion'
 cask 'obsidian'
 cask 'postman'
 cask 'raycast'

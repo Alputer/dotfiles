@@ -5,25 +5,30 @@
 ;; Docs: https://jtroo.github.io/config.html#tap-hold
 ;; Discussion: https://github.com/jtroo/kanata/discussions/1455
 
+;; sleep is Linux-only by name; register the OsCode for macOS output.
+(deflocalkeys-macos
+  sleep 142
+)
+
 (defcfg
   process-unmapped-keys yes
-  ;; From `kanata --list`. Name-based matching is preferred over hashes
-  ;; when Karabiner's virtual HID device is present (hashes can change).
-  ;; Do not include Karabiner DriverKit VirtualHIDKeyboard — that can loop.
-  macos-dev-names-include (
-    "Apple Internal Keyboard / Trackpad"
-    "MX Keys Mini B"
-  )
-  ;; Keep running if the BT keyboard isn't connected yet; grab it on connect.
+  ;; No include-list: grab all real keyboards (built-in + BT) via catch-all
+  ;; registration so devices that connect later are still remapped.
+  ;; Karabiner's virtual keyboard and Sidecar are skipped automatically.
+  ;; Keep running if no keyboard is found yet (e.g. early boot).
   macos-continue-if-no-devs-found yes
 )
 
 (defsrc
   caps
-  a s d f j k l ;
+  q
+  y u i
+  a s d f g h j k l ;
   ;; § (grave) → caps-word; ISO key → backtick (old Karabiner grave swap)
   grv
   nonusbslash
+  fn
+  lctl
 )
 
 (defvar
@@ -45,9 +50,13 @@
 
 (deflayer base
   esc
-  @a @s @d @f @j @k @l @;
+  q
+  y u i
+  @a @s @d @f g h @j @k @l @;
   @cw
   grv
+  @fnmed
+  @med
 )
 
 ;; Plain letters while rolling, but keep shift so CamelCase (jD, jK) works
@@ -55,9 +64,25 @@
 ;; to avoid accidental shifts during fast typing.
 (deflayer nomods
   esc
-  a s @dsft f j @ksft l ;
+  q
+  y u i
+  a s @dsft f g h j @ksft l ;
   @cw
   grv
+  @fnmed
+  @med
+)
+
+;; Hold fn or left ctrl: sleep on q; playback on y u i; mute/vol/brightness on g h j k l
+(deflayer media
+  _
+  sleep
+  prev pp next
+  _ _ _ _ mute vold volu brdn brup _
+  _
+  _
+  _
+  _
 )
 
 (deffakekeys
@@ -69,6 +94,11 @@
     (layer-switch nomods)
     (on-idle-fakekey to-base tap 20)
   )
+
+  ;; Hold left ctrl (or fn) to activate the media layer.
+  ;; Physical lctl is free because Ctrl comes from home-row `a`.
+  med (layer-while-held media)
+  fnmed (multi fn (layer-while-held media))
 
   ;; Dedicated § key: toggle caps-word (auto-off on idle / word boundary).
   cw (caps-word-toggle 5000)

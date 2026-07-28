@@ -1,208 +1,93 @@
-after-login-command = []
-after-startup-command = [
-    'exec-and-forget open -a "WezTerm"',
-    'exec-and-forget open -a "WezTerm"',
-    'exec-and-forget open -a "Visual Studio Code"',
-    'exec-and-forget open -a "Slack"',
-    'exec-and-forget open -a "WhatsApp"',
-    'exec-and-forget open -a "Brave Browser"',
-    'exec-and-forget open -a "Xcode" ~/code/shero-social/app',
-    'exec-and-forget open -a "Simulator"',
-    'workspace c'
-]
+config-version = 2
 
-exec-on-workspace-change = []
+# Start AeroSpace at login
+start-at-login = true
 
-start-at-login = false
-
-# Normalization keeps the window tree clean
-enable-normalization-flatten-containers = true
-enable-normalization-opposite-orientation-for-nested-containers = true
-
-accordion-padding = 30
-default-root-container-layout = 'tiles'
-default-root-container-orientation = 'auto'
-
-# Mouse follows focus across monitors
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-
-# Prevent accidental cmd-h hiding apps (common annoyance with tiling WMs)
-automatically-unhide-macos-hidden-apps = true
-
-[key-mapping]
-    preset = 'qwerty'
+# Automatically reload the config when the config file is saved
+# After setting this to true, reload once manually to start the auto-reloading
+auto-reload-config = false
 
 [gaps]
-    inner.horizontal = 4
-    inner.vertical =   4
-    outer.left =       6
-    outer.bottom =     6
-    outer.top =        6
-    outer.right =      6
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
 
-# ──────────────────────────────────────────────
-# MAIN BINDINGS — All use Ctrl+Alt (Caps Lock)
-# ──────────────────────────────────────────────
+persistent-workspaces = ['B', 'S', 'C', 'T']
+
+after-startup-command = [
+    'exec-and-forget open -a "Brave Browser"',
+    'exec-and-forget open -a Slack',
+    'exec-and-forget open -a Cursor',
+    'exec-and-forget open -a WezTerm',
+]
+
+on-window-detected = [
+    # B - Browser
+    {
+        if = 'test %{app-bundle-id} = com.brave.Browser',
+        run = 'move-node-to-workspace B',
+    },
+    # S - Slack
+    {
+        if = 'test %{app-bundle-id} = com.tinyspeck.slackmacgap',
+        run = 'move-node-to-workspace S',
+    },
+    # C - Cursor
+    {
+        if = 'test %{app-bundle-id} = com.todesktop.230313mzl4w4u92',
+        run = 'move-node-to-workspace C',
+    },
+    # T - Terminal (WezTerm)
+    {
+        if = 'test %{app-bundle-id} = com.github.wez.wezterm',
+        run = 'move-node-to-workspace T',
+    },
+]
+
 [mode.main.binding]
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
 
-    # Layout toggles
-    ctrl-alt-slash   = 'layout tiles horizontal vertical'
-    ctrl-alt-comma   = 'layout accordion horizontal vertical'
-    # ctrl-alt-space = 'layout floating tiling'
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
 
-    # Vim-style focus (h/j/k/l)
-    ctrl-alt-h = 'focus left'
-    ctrl-alt-j = 'focus down'
-    ctrl-alt-k = 'focus up'
-    ctrl-alt-l = 'focus right'
-    ctrl-alt-left = 'focus left'
-    ctrl-alt-down = 'focus down'
-    ctrl-alt-up = 'focus up'
-    ctrl-alt-right = 'focus right'
+alt-ctrl-h = 'join-with left'
+alt-ctrl-j = 'join-with down'
+alt-ctrl-k = 'join-with up'
+alt-ctrl-l = 'join-with right'
 
-    # Move windows (add Shift)
-    ctrl-alt-shift-h = 'move left'
-    ctrl-alt-shift-j = 'move down'
-    ctrl-alt-shift-k = 'move up'
-    ctrl-alt-shift-l = 'move right'
-    ctrl-alt-shift-left = 'move left'
-    ctrl-alt-shift-down = 'move down'
-    ctrl-alt-shift-up = 'move up'
-    ctrl-alt-shift-right = 'move right'
+alt-left = 'resize width -50'
+alt-right = 'resize width +50'
+alt-up = 'resize height -50'
+alt-down = 'resize height +50'
 
-    # Numbered workspaces (1-9)
-    ctrl-alt-1 = 'workspace 1'
-    ctrl-alt-2 = 'workspace 2'
-    ctrl-alt-3 = 'workspace 3'
+alt-b = 'workspace B'
+alt-s = 'workspace S'
+alt-c = 'workspace C'
+alt-t = 'workspace T'
 
-    # Named workspaces — assign letters for quick access
-    ctrl-alt-c = 'workspace c'   # Code + agents + simulators
-    ctrl-alt-b = 'workspace b'   # Browser
-    ctrl-alt-s = 'workspace s'   # Slack/Discord/Whatsapp
-    ctrl-alt-x = 'workspace x'   # Xcode
+alt-shift-b = 'move-node-to-workspace B; workspace B'
+alt-shift-s = 'move-node-to-workspace S; workspace S'
+alt-shift-c = 'move-node-to-workspace C; workspace C'
+alt-shift-t = 'move-node-to-workspace T; workspace T'
 
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+alt-shift-f = 'layout floating tiling'
+alt-shift-space = 'balance-sizes'
 
-    # Move window to workspace (add Shift)
-    ctrl-alt-shift-1 = 'move-node-to-workspace 1'
-    ctrl-alt-shift-2 = 'move-node-to-workspace 2'
-    ctrl-alt-shift-3 = 'move-node-to-workspace 3'
-    ctrl-alt-shift-c = 'move-node-to-workspace c'
-    ctrl-alt-shift-b = 'move-node-to-workspace b'
-    ctrl-alt-shift-s = 'move-node-to-workspace s'
-    ctrl-alt-shift-x = 'move-node-to-workspace x'
+alt-tab = 'workspace-back-and-forth'
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-    # Workspace navigation
-    ctrl-alt-tab = 'workspace-back-and-forth'   # Go to previous workspace
-
-    # Move current workspace to a specific monitor
-    ctrl-alt-shift-m = 'move-workspace-to-monitor built-in'
-    ctrl-alt-m       = 'move-workspace-to-monitor MSI MP271'
-
-    # Join windows into containers (like i3 grouping)
-    ctrl-alt-cmd-h = 'join-with left'
-    ctrl-alt-cmd-j = 'join-with down'
-    ctrl-alt-cmd-k = 'join-with up'
-    ctrl-alt-cmd-l = 'join-with right'
-    ctrl-alt-cmd-left = 'join-with left'
-    ctrl-alt-cmd-down = 'join-with down'
-    ctrl-alt-cmd-up = 'join-with up'
-    ctrl-alt-cmd-right = 'join-with right'
-    
-    # Window management
-    ctrl-alt-r = 'flatten-workspace-tree'
-    ctrl-alt-f = 'fullscreen'
-    ctrl-alt-q = 'close'
-    ctrl-alt-enter = 'exec-and-forget open -na wezterm'
-
-    # Config reload
-    ctrl-alt-esc = [ 'reload-config', 'mode main' ]
-
-    # Disable macOS hide (conflicts with tiling)
-    cmd-h = []
-    cmd-alt-h = []
-
-    # Enter modal modes
-    ctrl-alt-w = 'mode resize'
-    ctrl-alt-a = 'mode apps'
-
-[workspace-to-monitor-force-assignment]
-    1 = ['MSI MP271', 'built-in']
-    2 = ['MSI MP271', 'built-in']
-    3 = ['MSI MP271', 'built-in']
-
-    c = ['MSI MP271', 'built-in']
-    b = ['MSI MP271', 'built-in']
-    s = ['MSI MP271', 'built-in']
-    x = ['MSI MP271', 'built-in']
-
-[mode.resize.binding]
-
-    # Vim keys and arrow keys
-    h = 'resize width -50'
-    j = 'resize height +50'
-    k = 'resize height -50'
-    l = 'resize width +50'
-    left  = 'resize width -50'
-    down  = 'resize height +50'
-    up    = 'resize height -50'
-    right = 'resize width +50'
-
-    # Exit resize mode
-    enter = 'mode main'
-    esc   = 'mode main'
-
-# ──────────────────────────────────────────
-# APPS MODE — Quick-launch apps
-# ──────────────────────────────────────────
-[mode.apps.binding]
-    c = ['workspace c', 'exec-and-forget open -a "Code"', 'mode main']
-    t = ['workspace c', 'exec-and-forget open -a "Wezterm"', 'mode main']
-    b = ['workspace b', 'exec-and-forget open -a "Brave"', 'mode main']
-    s = ['workspace s', 'exec-and-forget open -a "Slack"', 'mode main']
-    w = ['workspace s', 'exec-and-forget open -a "WhatsApp"', 'mode main']
-    d = ['workspace s', 'exec-and-forget open -a "Discord"', 'mode main']
-    x = ['workspace x', 'exec-and-forget open -a "Xcode"', 'mode main']
-    ctrl-alt-esc = [ 'reload-config', 'mode main' ]
-
-
-# Workspace assignments (startup only)
-[[on-window-detected]]
-if.app-id = 'com.brave.Browser'
-run = 'move-node-to-workspace b'
-
-[[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
-run = 'move-node-to-workspace c'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.iphonesimulator'
-run = 'move-node-to-workspace c'
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
-run = 'move-node-to-workspace c'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.dt.Xcode'
-run = 'move-node-to-workspace x'
-
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace s'
-
-[[on-window-detected]]
-if.app-id = 'net.whatsapp.WhatsApp'
-run = 'move-node-to-workspace s'
-
-# Floating windows for system apps
-[[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.systempreferences'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.ActivityMonitor'
-run = 'layout floating'
+alt-q = 'close'
+alt-f = 'fullscreen'
+alt-enter = 'exec-and-forget open -na WezTerm'
+alt-r = 'flatten-workspace-tree'
+alt-shift-r = 'reload-config'

@@ -9,37 +9,19 @@ auto-reload-config = false
 
 persistent-workspaces = ['B', 'S', 'C', 'T']
 
-after-startup-command = [
-    # JankyBorders has a built-in detection of already running process,
-    # so it won't be run twice on AeroSpace restart
-    'exec-and-forget borders',
-    'exec-and-forget open -a "Brave Browser"',
-    'exec-and-forget open -a Slack',
-    'exec-and-forget open -a Cursor',
-    'exec-and-forget open -a WezTerm',
+# Notify SketchyBar when the focused workspace changes
+exec-on-workspace-change = [
+    '/bin/bash',
+    '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
-on-window-detected = [
-    # B - Browser
-    {
-        if = 'test %{app-bundle-id} = com.brave.Browser',
-        run = 'move-node-to-workspace B',
-    },
-    # S - Slack
-    {
-        if = 'test %{app-bundle-id} = com.tinyspeck.slackmacgap',
-        run = 'move-node-to-workspace S',
-    },
-    # C - Cursor
-    {
-        if = 'test %{app-bundle-id} = com.todesktop.230313mzl4w4u92',
-        run = 'move-node-to-workspace C',
-    },
-    # T - Terminal (WezTerm)
-    {
-        if = 'test %{app-bundle-id} = com.github.wez.wezterm',
-        run = 'move-node-to-workspace T',
-    },
+after-startup-command = [
+    # Borders / SketchyBar detect an already-running process and won't double-start
+    'exec-and-forget borders',
+    'exec-and-forget sketchybar',
+    # Place default apps on B/S/C/T only at startup (not on later manual launches)
+    'exec-and-forget bash "$HOME/.config/aerospace/startup-apps.sh"',
 ]
 
 [gaps]
@@ -47,6 +29,7 @@ inner.horizontal = 8
 inner.vertical = 8
 outer.left = 8
 outer.bottom = 8
+# Room for SketchyBar (height 34) + padding
 outer.top = 8
 outer.right = 8
 

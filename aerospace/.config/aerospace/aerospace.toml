@@ -7,7 +7,7 @@ start-at-login = true
 # After setting this to true, reload once manually to start the auto-reloading
 auto-reload-config = false
 
-persistent-workspaces = ['B', 'S', 'C', 'T']
+persistent-workspaces = ['1', '2', '3', '4']
 
 # Notify SketchyBar when the focused workspace changes
 exec-on-workspace-change = [
@@ -16,11 +16,24 @@ exec-on-workspace-change = [
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
+# Refresh workspace app icons when focus changes (open/close/move within a space)
+on-focus-changed = [
+    'exec-and-forget sketchybar --trigger aerospace_focus_change',
+]
+
+# Catch newly detected windows so icons appear without waiting for a focus event
+on-window-detected = [
+    {
+        if = 'true',
+        run = ['exec-and-forget sketchybar --trigger aerospace_focus_change'],
+    },
+]
+
 after-startup-command = [
     # Borders / SketchyBar detect an already-running process and won't double-start
     'exec-and-forget borders',
     'exec-and-forget sketchybar',
-    # Place default apps on B/S/C/T only at startup (not on later manual launches)
+    # Place default apps on 1/2/3/4 only at startup (not on later manual launches)
     'exec-and-forget bash "$HOME/.config/aerospace/startup-apps.sh"',
 ]
 
@@ -54,15 +67,15 @@ alt-right = 'resize width +50'
 alt-up = 'resize height -50'
 alt-down = 'resize height +50'
 
-alt-b = 'workspace B'
-alt-s = 'workspace S'
-alt-c = 'workspace C'
-alt-t = 'workspace T'
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
 
-alt-shift-b = 'move-node-to-workspace B; workspace B'
-alt-shift-s = 'move-node-to-workspace S; workspace S'
-alt-shift-c = 'move-node-to-workspace C; workspace C'
-alt-shift-t = 'move-node-to-workspace T; workspace T'
+alt-shift-1 = 'move-node-to-workspace 1; workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2; workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3; workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4; workspace 4'
 
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'

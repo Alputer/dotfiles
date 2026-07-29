@@ -4,6 +4,7 @@ source "$CONFIG_DIR/colors.sh"
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 FONT="JetBrainsMono Nerd Font"
+APP_FONT="sketchybar-app-font"
 
 ##### Bar #####
 sketchybar --bar \
@@ -41,16 +42,9 @@ sketchybar --default "${default[@]}"
 
 ##### Events #####
 sketchybar --add event aerospace_workspace_change
+sketchybar --add event aerospace_focus_change
 
 ##### Left: AeroSpace workspaces #####
-# Icons: Browser / Slack / Cursor / Terminal
-WORKSPACES=(
-  "B:󰖟"
-  "S:󰒱"
-  "C:󰨞"
-  "T:󰆍"
-)
-
 sketchybar --add item aerospace_logo left \
   --set aerospace_logo \
     icon="󱂬" \
@@ -62,17 +56,14 @@ sketchybar --add item aerospace_logo left \
     background.drawing=off \
     padding_right=6
 
-for entry in "${WORKSPACES[@]}"; do
-  sid="${entry%%:*}"
-  icon="${entry##*:}"
-
+for sid in 1 2 3 4; do
   sketchybar --add item "space.$sid" left \
-    --subscribe "space.$sid" aerospace_workspace_change \
+    --subscribe "space.$sid" aerospace_workspace_change aerospace_focus_change front_app_switched \
     --set "space.$sid" \
-      icon="$icon" \
+      icon="$sid" \
       icon.font="$FONT:Bold:15.0" \
-      label="$sid" \
-      label.font="$FONT:Bold:12.0" \
+      label="" \
+      label.font="$APP_FONT:Regular:14.0" \
       background.drawing=off \
       click_script="aerospace workspace $sid" \
       script="$PLUGIN_DIR/aerospace.sh $sid"

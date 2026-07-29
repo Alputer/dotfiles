@@ -49,8 +49,9 @@ brew 'stylua'
 brew 'tldr'
 brew 'tree-sitter'
 
-# Nerd Fonts
+# Nerd Fonts / SketchyBar app icons
 cask 'font-jetbrains-mono-nerd-font'
+cask 'font-sketchybar-app-font'
 
 cask 'aerospace'
 cask 'brave-browser'

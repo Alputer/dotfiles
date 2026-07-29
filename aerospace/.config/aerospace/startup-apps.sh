@@ -22,7 +22,7 @@ move_app_to_workspace() {
   done
 }
 
-move_app_to_workspace "Brave Browser" "com.brave.Browser" "B"
-move_app_to_workspace "Slack" "com.tinyspeck.slackmacgap" "S"
-move_app_to_workspace "Cursor" "com.todesktop.230313mzl4w4u92" "C"
-move_app_to_workspace "WezTerm" "com.github.wez.wezterm" "T"
+move_app_to_workspace "Brave Browser" "com.brave.Browser" "1"
+move_app_to_workspace "Slack" "com.tinyspeck.slackmacgap" "2"
+move_app_to_workspace "Cursor" "com.todesktop.230313mzl4w4u92" "3"
+move_app_to_workspace "WezTerm" "com.github.wez.wezterm" "4"

@@ -102,5 +102,28 @@ sketchybar --add item volume right \
     background.drawing=on \
   --subscribe volume volume_change
 
+sketchybar --add item brightness right \
+  --set brightness \
+    icon.color="$YELLOW" \
+    script="$PLUGIN_DIR/brightness.sh" \
+    background.drawing=on \
+  --subscribe brightness brightness_change
+
+sketchybar --add item language right \
+  --set language \
+    update_freq=1 \
+    script="$PLUGIN_DIR/language.sh" \
+    background.drawing=on
+
+sketchybar --add item wifi right \
+  --set wifi \
+    update_freq=10 \
+    script="$PLUGIN_DIR/wifi.sh" \
+    label.drawing=off \
+    icon.padding_left=8 \
+    icon.padding_right=8 \
+    background.drawing=on \
+  --subscribe wifi wifi_change system_woke
+
 ##### Initial paint #####
 sketchybar --update

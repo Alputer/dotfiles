@@ -9,13 +9,6 @@ auto-reload-config = false
 
 persistent-workspaces = ['1', '2', '3', '4']
 
-# Prefer MSI when connected; otherwise use the built-in display
-[workspace-to-monitor-force-assignment]
-1 = ['MSI', 'built-in']
-2 = ['MSI', 'built-in']
-3 = ['MSI', 'built-in']
-4 = ['MSI', 'built-in']
-
 # Notify SketchyBar when the focused workspace changes
 exec-on-workspace-change = [
     '/bin/bash',
@@ -43,6 +36,14 @@ after-startup-command = [
     # Place default apps on 1/2/3/4 only at startup (not on later manual launches)
     'exec-and-forget bash "$HOME/.config/aerospace/startup-apps.sh"',
 ]
+
+# Prefer MSI when connected; otherwise use the built-in display
+# (Must come after root keys — TOML nests everything under a [table] until the next one)
+[workspace-to-monitor-force-assignment]
+1 = ['MSI', 'built-in']
+2 = ['MSI', 'built-in']
+3 = ['MSI', 'built-in']
+4 = ['MSI', 'built-in']
 
 [gaps]
 inner.horizontal = [{ monitor."MSI" = 12 }, 8]

@@ -23,7 +23,8 @@ if [ "$WORKSPACE" = "$FOCUSED_WORKSPACE" ]; then
   sketchybar --set "$NAME" \
     label="$icon_strip" \
     background.drawing=on \
-    background.color="$RED" \
+    background.color="$ACTIVE_PILL" \
+    background.border_color="$RIM" \
     icon.color="$TEXT" \
     label.color="$TEXT"
 else
@@ -33,3 +34,4 @@ else
     icon.color="$SUBTEXT0" \
     label.color="$SUBTEXT0"
 fi
+

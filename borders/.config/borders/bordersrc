@@ -1,11 +1,20 @@
 #!/bin/bash
+# Soft glass rim — thin specular edge, appearance-aware.
+
+if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then
+  active_color=0xffffffff   # solid white rim
+  inactive_color=0x99ffffff # ~60% white edge
+else
+  active_color=0xff1c1c1e   # solid dark rim
+  inactive_color=0x663c3c43
+fi
 
 options=(
-    style=round
-    width=4.0
-    hidpi=off
-    active_color=0xFFEB212E
-    inactive_color=0XFF414550
+  style=round
+  width=5.0
+  hidpi=on
+  active_color="$active_color"
+  inactive_color="$inactive_color"
 )
 
-borders "${options[@]}"!
+borders "${options[@]}"

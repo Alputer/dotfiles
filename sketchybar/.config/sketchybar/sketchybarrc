@@ -32,8 +32,10 @@ default=(
   label.padding_left=2
   label.padding_right=6
   background.color="$ITEM_BG"
-  background.corner_radius=6
+  background.corner_radius=11
   background.height=24
+  background.border_color="$RIM"
+  background.border_width=1
   background.drawing=off
   padding_left=3
   padding_right=3
@@ -48,7 +50,7 @@ sketchybar --add event aerospace_focus_change
 sketchybar --add item aerospace_logo left \
   --set aerospace_logo \
     icon="󱂬" \
-    icon.color="$RED" \
+    icon.color="$BLUE" \
     icon.font="$FONT:Bold:16.0" \
     icon.padding_left=8 \
     icon.padding_right=8 \

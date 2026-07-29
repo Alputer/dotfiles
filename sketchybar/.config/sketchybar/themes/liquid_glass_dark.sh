@@ -4,9 +4,9 @@
 export BASE=0xff1c1c1e
 export MANTLE=0xff000000
 export CRUST=0xff000000
-export SURFACE0=0x552c2c2e
-export SURFACE1=0x663a3a3c
-export SURFACE2=0x7748484a
+export SURFACE0=0x402c2c2e
+export SURFACE1=0x553a3a3c
+export SURFACE2=0x6648484a
 export OVERLAY0=0x99ebebf5
 export TEXT=0xfff5f5f7
 export SUBTEXT0=0xb3ebebf5
@@ -21,7 +21,9 @@ export PEACH=0xffff9f0a
 export TEAL=0xff64d2ff
 
 export TRANSPARENT=0x00000000
-export BAR_BG=0x661c1c1e
-export BAR_BLUR=40
-export ITEM_BG=0x553a3a3c
-export ITEM_BG_HOVER=0x6648484a
+export BAR_BG=0x401c1c1e
+export BAR_BLUR=55
+export ITEM_BG=0x33ffffff
+export ITEM_BG_HOVER=0x44ffffff
+export ACTIVE_PILL=0x55ffffff
+export RIM=0x33ffffff

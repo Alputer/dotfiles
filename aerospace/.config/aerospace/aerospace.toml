@@ -9,6 +9,13 @@ auto-reload-config = false
 
 persistent-workspaces = ['1', '2', '3', '4']
 
+# Prefer MSI when connected; otherwise use the built-in display
+[workspace-to-monitor-force-assignment]
+1 = ['MSI', 'built-in']
+2 = ['MSI', 'built-in']
+3 = ['MSI', 'built-in']
+4 = ['MSI', 'built-in']
+
 # Notify SketchyBar when the focused workspace changes
 exec-on-workspace-change = [
     '/bin/bash',
@@ -38,13 +45,13 @@ after-startup-command = [
 ]
 
 [gaps]
-inner.horizontal = 8
-inner.vertical = 8
-outer.left = 8
-outer.bottom = 8
+inner.horizontal = [{ monitor."MSI" = 12 }, 8]
+inner.vertical   = [{ monitor."MSI" = 12 }, 8]
+outer.left       = [{ monitor."MSI" = 12 }, 8]
+outer.bottom     = [{ monitor."MSI" = 12 }, 8]
 # Room for SketchyBar (height 34) + padding
-outer.top = 8
-outer.right = 8
+outer.top        = [{ monitor."MSI" = 42 }, 8]
+outer.right      = [{ monitor."MSI" = 12 }, 8]
 
 [mode.main.binding]
 alt-h = 'focus left'

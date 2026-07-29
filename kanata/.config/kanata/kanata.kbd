@@ -12,11 +12,6 @@
 
 (defcfg
   process-unmapped-keys yes
-  ;; No include-list: grab all real keyboards (built-in + BT) via catch-all
-  ;; registration so devices that connect later are still remapped.
-  ;; Karabiner's virtual keyboard and Sidecar are skipped automatically.
-  ;; Keep running if no keyboard is found yet (e.g. early boot).
-  macos-continue-if-no-devs-found yes
 )
 
 (defsrc

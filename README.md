@@ -114,7 +114,7 @@ mise install
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
-After changing `~/.config/kanata/kanata.kbd`, restart the daemon:
+Restart the daemon after editing `~/.config/kanata/kanata.kbd`, and whenever a Bluetooth keyboard connects after boot or wake (Kanata may miss devices that appear after it starts):
 
 ```bash
 sudo launchctl kickstart -k system/com.kanata.daemon

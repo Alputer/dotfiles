@@ -11,7 +11,7 @@ sketchybar --bar \
   position=top \
   height=34 \
   color="$BAR_BG" \
-  blur_radius=24 \
+  blur_radius="$BAR_BLUR" \
   corner_radius=0 \
   sticky=on \
   padding_left=12 \

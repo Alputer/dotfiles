@@ -8,3 +8,8 @@ end
 if type -q mise
     mise activate fish | source
 end
+
+# starship
+if type -q starship
+    starship init fish | source
+end

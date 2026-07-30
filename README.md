@@ -92,7 +92,7 @@ cd ~/dotfiles
 Symlink packages into `$HOME`:
 
 ```bash
-stow -t ~ aerospace borders fish git kanata mise nvim sketchybar ssh wezterm
+stow -t ~ aerospace borders fish git kanata mise nvim sketchybar ssh starship wezterm
 ```
 
 Skip any package you do not want. Do not stow `archive/` (includes retired `karabiner` and `zsh` configs).
@@ -133,6 +133,7 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `nvim`       | `~/.config/nvim`                 |
 | `sketchybar` | `~/.config/sketchybar`           |
 | `ssh`        | `~/.ssh/config`                  |
+| `starship`   | `~/.config/starship.toml`        |
 | `wezterm`    | `~/.config/wezterm`              |
 
 ## Useful Stow commands

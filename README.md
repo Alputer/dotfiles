@@ -1,6 +1,6 @@
 # Dotfiles
 
-macOS setup for a fresh machine: Xcode, Homebrew, mise, SSH, GNU Stow, then Kanata.
+macOS setup for a fresh machine: Xcode, Homebrew, SSH, GNU Stow, then Kanata.
 
 ## Prerequisites
 
@@ -13,43 +13,13 @@ macOS setup for a fresh machine: Xcode, Homebrew, mise, SSH, GNU Stow, then Kana
 
 Install **Xcode** from the [App Store](https://apps.apple.com/app/xcode/id497799835). This provides the `xcode-select` developer CLI tools Homebrew needs, and is useful for iOS development.
 
-After it finishes installing, accept the license and point `xcode-select` at the app:
-
-```bash
-sudo xcodebuild -license accept
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-```
-
 ## 2. Install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Add Homebrew to your PATH (Apple Silicon):
-
-```bash
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
-```
-
-## 3. Install mise
-
-```bash
-brew install mise
-```
-
-Activate mise in your current shell (until dotfiles are stowed):
-
-```bash
-# zsh
-eval "$(mise activate zsh)"
-
-# fish
-mise activate fish | source
-```
-
-## 4. Set up SSH for GitHub
+## 3. Set up SSH for GitHub
 
 Cloning uses SSH (`git@github.com:...`), so you need a key loaded in `ssh-agent` and added to GitHub.
 
@@ -81,23 +51,23 @@ ssh -T git@github.com
 
 Your stowed `~/.ssh/config` uses `~/.ssh/id_ed25519` for `github.com`. On macOS the system `ssh-agent` is already available, so no shell startup hook is needed.
 
-## 5. Clone and enable with Stow
+## 4. Clone the repo
 
 ```bash
-brew install stow git
 git clone git@github.com:Alputer/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-Symlink packages into `$HOME`:
+## 5. Stow the dotfiles
 
 ```bash
-stow -t ~ aerospace borders fish git kanata mise nvim sketchybar ssh starship wezterm
+brew install stow
+./stow.sh
 ```
 
-Skip any package you do not want. Do not stow `archive/` (includes retired `karabiner` and `zsh` configs).
+This stows every package directory except `archive/` (retired `karabiner` and `zsh` configs). Edit the `exclude` list in `stow.sh` to skip packages you do not want.
 
-If Stow refuses because a file already exists, move or remove the conflict, then re-run the command.
+If Stow refuses because a file already exists, move or remove the conflict, then re-run the script.
 
 ## 6. Install packages and tools
 

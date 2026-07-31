@@ -12,12 +12,6 @@ else
     echo "fish: mise not found — brew install mise" >&2
 end
 
-# Start ssh-agent automatically
-if not set -q SSH_AUTH_SOCK
-    eval (ssh-agent -c)
-    ssh-add ~/.ssh/id_ed25519 2>/dev/null
-end
-
 # system info once per boot
 if status is-interactive
     if type -q fastfetch

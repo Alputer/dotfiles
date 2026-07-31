@@ -79,7 +79,7 @@ Verify:
 ssh -T git@github.com
 ```
 
-After stowing, `fish` starts `ssh-agent` and runs `ssh-add` automatically. Your stowed `~/.ssh/config` uses named keys (`id_ed25519_gmail`, `id_ed25519_secrethero`) and host aliases (`github-personal`, `gitlab-work`) — rename or adjust those when you wire up multiple accounts.
+Your stowed `~/.ssh/config` uses `~/.ssh/id_ed25519` for `github.com`. On macOS the system `ssh-agent` is already available, so no shell startup hook is needed.
 
 ## 5. Clone and enable with Stow
 

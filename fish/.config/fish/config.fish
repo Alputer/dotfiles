@@ -1,15 +1,15 @@
-# starship
-if type -q starship
-    starship init fish | source
-else
-    echo "fish: starship not found — brew install starship" >&2
-end
-
 # mise
 if type -q mise
     mise activate fish | source
 else
     echo "fish: mise not found — brew install mise" >&2
+end
+
+# starship
+if type -q starship
+    starship init fish | source
+else
+    echo "fish: starship not found — mise install starship" >&2
 end
 
 # system info once per boot
@@ -23,7 +23,7 @@ if status is-interactive
             fastfetch
         end
     else
-        echo "fish: fastfetch not found — brew install fastfetch" >&2
+        echo "fish: fastfetch not found — mise install fastfetch" >&2
     end
 end
 
@@ -32,5 +32,5 @@ end
 if type -q zoxide
     zoxide init fish | source
 else
-    echo "fish: zoxide not found — brew install zoxide" >&2
+    echo "fish: zoxide not found — mise install zoxide" >&2
 end

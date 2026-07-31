@@ -19,11 +19,25 @@ gcloud = "latest"
 terraform = "latest"
 kubectl = "latest"
 helm = "latest"
+docker-cli = "latest"
 
 # Development tools
-
 gh = "latest"
 lazygit = "latest"
 tmux = "latest"
 neovim = "latest"
+luarocks = "latest"
+stylua = "latest"
+starship = "latest"
 
+# Everyday CLI utilities
+bat = "latest"
+eza = "latest"
+fd = "latest"
+fzf = "latest"
+jq = "latest"
+ripgrep = "latest"
+htop = "latest"
+tldr = "latest"
+zoxide = "latest"
+fastfetch = "latest"

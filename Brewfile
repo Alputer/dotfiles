@@ -1,56 +1,29 @@
 tap 'nikitabobko/tap'
 tap 'FelixKratz/formulae'
 
-# Core build tools
+# Build deps for compiling language runtimes via mise (ruby, python, etc.)
+# and native extensions (gems, pip). Keep even after first install.
 brew 'autoconf'
 brew 'automake'
 brew 'pkg-config'
 brew 'libtool'
-
-# Security / networking libraries
 brew 'libffi'
 brew 'openssl@3'
 brew 'zlib'
-
-# Data formats / parsers
 brew 'gmp'
 brew 'libyaml'
 brew 'readline'
 
-# Common CLI utilities & Others
-brew 'bat'
+# Bootstrap, host CLIs & macOS tooling
 brew 'borders'
 brew 'colima'
 brew 'container'
-brew 'curl'
-brew 'docker'
-brew 'eza'
-brew 'fastfetch'
-brew 'fd'
-brew 'fzf'
 brew 'fish'
-brew 'git'
-brew 'go'
-brew 'htop'
-brew 'jq'
 brew 'kanata'
-brew 'lazygit'
-brew 'lua'
-brew 'luarocks'
 brew 'mas'
 brew 'mise'
-brew 'node'
-brew 'neovim'
-brew 'python'
-brew 'ripgrep'
-brew 'rust'
 brew 'sketchybar'
-brew 'starship'
 brew 'stow'
-brew 'stylua'
-brew 'tldr'
-brew 'tree-sitter'
-brew 'zoxide'
 
 # Nerd Fonts / SketchyBar app icons
 cask 'font-jetbrains-mono-nerd-font'

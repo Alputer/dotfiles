@@ -1,5 +1,11 @@
 [user]
 	name = Alp Tuna
 	email = alp.tuna.453@gmail.com
+[core]
+	editor = nvim
 [init]
 	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true

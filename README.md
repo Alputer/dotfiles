@@ -71,9 +71,11 @@ If Stow refuses because a file already exists, move or remove the conflict, then
 
 ## 6. Install packages and tools
 
-From the repo root:
+From the repo root, trust the third-party taps used by the Brewfile, then install:
 
 ```bash
+brew trust nikitabobko/tap
+brew trust felixkratz/formulae
 brew bundle
 mise install
 ```

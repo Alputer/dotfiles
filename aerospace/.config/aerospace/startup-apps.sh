@@ -24,5 +24,6 @@ move_app_to_workspace() {
 
 move_app_to_workspace "Brave Browser" "com.brave.Browser" "1"
 move_app_to_workspace "Slack" "com.tinyspeck.slackmacgap" "2"
-move_app_to_workspace "Cursor" "com.todesktop.230313mzl4w4u92" "3"
-move_app_to_workspace "WezTerm" "com.github.wez.wezterm" "4"
+move_app_to_workspace "Notion" "notion.id" "3"
+move_app_to_workspace "Cursor" "com.todesktop.230313mzl4w4u92" "4"
+move_app_to_workspace "WezTerm" "com.github.wez.wezterm" "5"

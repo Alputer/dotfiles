@@ -7,7 +7,7 @@ start-at-login = true
 # After setting this to true, reload once manually to start the auto-reloading
 auto-reload-config = false
 
-persistent-workspaces = ['1', '2', '3', '4']
+persistent-workspaces = ['1', '2', '3', '4', '5']
 
 # Notify SketchyBar when the focused workspace changes
 exec-on-workspace-change = [
@@ -33,7 +33,7 @@ after-startup-command = [
     # Borders / SketchyBar detect an already-running process and won't double-start
     'exec-and-forget borders',
     'exec-and-forget sketchybar',
-    # Place default apps on 1/2/3/4 only at startup (not on later manual launches)
+    # Place default apps on 1/2/3/4/5 only at startup (not on later manual launches)
     'exec-and-forget bash "$HOME/.config/aerospace/startup-apps.sh"',
 ]
 
@@ -44,6 +44,7 @@ after-startup-command = [
 2 = ['MSI', 'built-in']
 3 = ['MSI', 'built-in']
 4 = ['MSI', 'built-in']
+5 = ['MSI', 'built-in']
 
 [gaps]
 inner.horizontal = [{ monitor."MSI" = 12 }, 8]
@@ -79,11 +80,13 @@ alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
 
 alt-shift-1 = 'move-node-to-workspace 1; workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2; workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3; workspace 3'
 alt-shift-4 = 'move-node-to-workspace 4; workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5; workspace 5'
 
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'

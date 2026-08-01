@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Args: workspace id (1|2|3|4)
+# Args: workspace id (1|2|3|4|5)
 # Highlight the focused AeroSpace workspace and show its app icons.
 
 source "$CONFIG_DIR/colors.sh"

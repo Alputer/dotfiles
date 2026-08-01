@@ -58,7 +58,7 @@ sketchybar --add item aerospace_logo left \
     background.drawing=off \
     padding_right=6
 
-for sid in 1 2 3 4; do
+for sid in 1 2 3 4 5; do
   sketchybar --add item "space.$sid" left \
     --subscribe "space.$sid" aerospace_workspace_change aerospace_focus_change front_app_switched \
     --set "space.$sid" \

@@ -37,23 +37,23 @@ after-startup-command = [
     'exec-and-forget bash "$HOME/.config/aerospace/startup-apps.sh"',
 ]
 
-# Prefer MSI when connected; otherwise use the built-in display
+# Prefer any external when connected; otherwise built-in
 # (Must come after root keys — TOML nests everything under a [table] until the next one)
 [workspace-to-monitor-force-assignment]
-1 = ['MSI', 'built-in']
-2 = ['MSI', 'built-in']
-3 = ['MSI', 'built-in']
-4 = ['MSI', 'built-in']
-5 = ['MSI', 'built-in']
+1 = ['secondary', 'built-in']
+2 = ['secondary', 'built-in']
+3 = ['secondary', 'built-in']
+4 = ['secondary', 'built-in']
+5 = ['secondary', 'built-in']
 
 [gaps]
-inner.horizontal = [{ monitor."MSI" = 12 }, 8]
-inner.vertical   = [{ monitor."MSI" = 12 }, 8]
-outer.left       = [{ monitor."MSI" = 12 }, 8]
-outer.bottom     = [{ monitor."MSI" = 12 }, 8]
+inner.horizontal = [{ monitor.secondary = 12 }, 8]
+inner.vertical   = [{ monitor.secondary = 12 }, 8]
+outer.left       = [{ monitor.secondary = 12 }, 8]
+outer.bottom     = [{ monitor.secondary = 12 }, 8]
 # Room for SketchyBar (height 34) + padding
-outer.top        = [{ monitor."MSI" = 42 }, 8]
-outer.right      = [{ monitor."MSI" = 12 }, 8]
+outer.top        = [{ monitor.secondary = 42 }, 8]
+outer.right      = [{ monitor.secondary = 12 }, 8]
 
 [mode.main.binding]
 alt-h = 'focus left'

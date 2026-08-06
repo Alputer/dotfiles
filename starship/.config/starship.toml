@@ -15,8 +15,8 @@ vimcmd_symbol = "[❮](bold green)"
 
 [directory]
 style = "bold lavender"
-truncation_length = 3
-truncate_to_repo = true
+truncation_length = 0
+truncate_to_repo = false
 
 [git_branch]
 symbol = " "

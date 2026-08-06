@@ -1,17 +1,17 @@
 #!/bin/bash
-# Soft glass rim — thin specular edge, appearance-aware.
+# Soft glass rim — focused window gets a glow so it reads clearly.
 
 if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then
-  active_color=0xffffffff   # solid white rim
-  inactive_color=0x99ffffff # ~60% white edge
+  active_color="glow(0xff30d158)" # system green glow
+  inactive_color=0x40ffffff
 else
-  active_color=0xff1c1c1e   # solid dark rim
-  inactive_color=0x663c3c43
+  active_color="glow(0xff34c759)" # system green glow
+  inactive_color=0x333c3c43
 fi
 
 options=(
   style=round
-  width=5.0
+  width=6.5
   hidpi=on
   active_color="$active_color"
   inactive_color="$inactive_color"

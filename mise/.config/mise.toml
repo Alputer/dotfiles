@@ -15,6 +15,7 @@ zig = "0.16.0"
 
 # Cloud & Infrastructure
 awscli = "2.36"
+circleci = "1.0.47091"
 gcloud = { version = "578.0.0", depends = ["python"] }
 terraform = "1.15.8"
 kubectl = "1.36.2"
@@ -22,6 +23,8 @@ helm = "4.2.3"
 docker-cli = "29.7.1"
 
 # Development tools
+buck2 = "2026-08-01"
+codex = "0.147.0"
 gh = "2.96.0"
 lazydocker = "0.25.2"
 lazygit = "0.63.1"

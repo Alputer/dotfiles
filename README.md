@@ -117,3 +117,17 @@ stow -t ~ -R <packages...>
 # Remove a package's symlinks
 stow -t ~ -D <package>
 ```
+
+## Git / SSH tips
+
+`~/.ssh/config` maps `github.com` to the work key and `github-personal` to the personal key. For personal repos (including this one), point the remote at the personal host alias:
+
+```bash
+git remote set-url origin git@github-personal:Alputer/dotfiles.git
+```
+
+Verify which account SSH authenticates as:
+
+```bash
+ssh -T git@github-personal
+```

@@ -1,7 +1,8 @@
 
-# Track only ssh config
+# Track SSH config and trusted host keys
 ssh/.ssh/*
 !ssh/.ssh/config
+!ssh/.ssh/known_hosts
 
 # Track only zsh config, not artifacts
 archive/zsh/*

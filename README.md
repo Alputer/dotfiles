@@ -23,38 +23,50 @@ Install **Xcode** from the [App Store](https://apps.apple.com/app/xcode/id497799
 
 Cloning uses SSH (`git@github.com:...`), so you need a key loaded in `ssh-agent` and added to GitHub.
 
-Generate a key (skip if you already have one, e.g. restored from backup):
+Generate the work and personal keys (skip either command if that key already exists, e.g. restored from backup):
 
 ```bash
 mkdir -p ~/.ssh && chmod 700 ~/.ssh
-ssh-keygen -t ed25519 -C "your@email.com" -f ~/.ssh/id_ed25519
+ssh-keygen -t ed25519 -C "your-work-email@example.com" -f ~/.ssh/id_ed25519_work
+ssh-keygen -t ed25519 -C "your-personal-email@example.com" -f ~/.ssh/id_ed25519_personal
 ```
 
 Start the agent and add the key:
 
 ```bash
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
+ssh-add ~/.ssh/id_ed25519_work
+ssh-add ~/.ssh/id_ed25519_personal
+ssh-add -l
 ```
 
-Copy the public key and add it at [GitHub → SSH keys](https://github.com/settings/keys):
+Copy each public key and add it to the appropriate work, personal GitHub, or Bitbucket account:
 
 ```bash
-pbcopy < ~/.ssh/id_ed25519.pub
+pbcopy < ~/.ssh/id_ed25519_work.pub
+pbcopy < ~/.ssh/id_ed25519_personal.pub
 ```
 
-Verify:
+Install the SSH config with GNU Stow and set its permissions:
+
+```bash
+stow -t ~ ssh
+chmod 600 ~/.ssh/config
+```
+
+Verify each configured identity:
 
 ```bash
 ssh -T git@github.com
+ssh -T git@bitbucket.org
+ssh -T git@github-personal
 ```
 
-Your stowed `~/.ssh/config` uses `~/.ssh/id_ed25519` for `github.com`. On macOS the system `ssh-agent` is already available, so no shell startup hook is needed.
+The stowed `~/.ssh/config` uses `id_ed25519_work` for `github.com` and `bitbucket.org`, and `id_ed25519_personal` for the `github-personal` alias. On macOS the system `ssh-agent` is already available, so no shell startup hook is needed. Use `ssh -vT git@github-personal` to debug which key SSH selects.
 
 ## 4. Clone the repo
 
 ```bash
-git clone git@github.com:Alputer/dotfiles.git ~/dotfiles
+git clone git@github-personal:Alputer/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
@@ -104,7 +116,7 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `mise`       | `~/.config/mise.toml`            |
 | `nvim`       | `~/.config/nvim`                 |
 | `sketchybar` | `~/.config/sketchybar`           |
-| `ssh`        | `~/.ssh/config`                  |
+| `ssh`        | `~/.ssh/config`, `~/.ssh/known_hosts` |
 | `starship`   | `~/.config/starship.toml`        |
 | `wezterm`    | `~/.config/wezterm`              |
 
@@ -130,4 +142,10 @@ Verify which account SSH authenticates as:
 
 ```bash
 ssh -T git@github-personal
+```
+
+For work GitHub repositories, use the normal host:
+
+```bash
+git remote set-url origin git@github.com:ORG/REPOSITORY.git
 ```

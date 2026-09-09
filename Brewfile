@@ -38,6 +38,7 @@ cask 'notion'
 cask 'obsidian'
 cask 'postman'
 cask 'raycast'
+cask "shottr"
 cask 'slack'
 cask 'tailscale'
 cask 'visual-studio-code'

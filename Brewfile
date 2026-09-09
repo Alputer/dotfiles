@@ -40,7 +40,7 @@ cask 'postman'
 cask 'raycast'
 cask "shottr"
 cask 'slack'
-cask 'tailscale'
+cask 'tailscale-app'
 cask 'visual-studio-code'
 cask 'wezterm'
 cask 'whatsapp'

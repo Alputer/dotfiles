@@ -1,6 +1,8 @@
 # Dotfiles
 
-macOS setup for a fresh machine: Xcode, Homebrew, SSH, GNU Stow, then Kanata.
+macOS setup for a fresh machine. Nix/nix-darwin owns macOS settings and
+Homebrew, Home Manager owns user settings, and mise owns CLI and language tool
+versions.
 
 ## Prerequisites
 
@@ -8,16 +10,16 @@ macOS setup for a fresh machine: Xcode, Homebrew, SSH, GNU Stow, then Kanata.
 - Apple ID (for the App Store)
 - Terminal with network access
 - A GitHub account with access to this repo
+- Determinate Nix
 
 ## 1. Install Xcode
 
 Install **Xcode** from the [App Store](https://apps.apple.com/app/xcode/id497799835). This provides the `xcode-select` developer CLI tools Homebrew needs, and is useful for iOS development.
 
-## 2. Install Homebrew
+## 2. Install Determinate Nix
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+`bootstrap.sh` installs Determinate Nix automatically before the first
+activation, so no separate Nix installation is required.
 
 ## 3. Set up SSH for GitHub
 
@@ -46,55 +48,61 @@ pbcopy < ~/.ssh/id_ed25519_work.pub
 pbcopy < ~/.ssh/id_ed25519_personal.pub
 ```
 
-Install the SSH config with GNU Stow and set its permissions:
-
-```bash
-stow -t ~ ssh
-chmod 600 ~/.ssh/config
-```
-
-Verify each configured identity:
-
-```bash
-ssh -T git@github.com
-ssh -T git@bitbucket.org
-ssh -T git@github-personal
-```
-
-The stowed `~/.ssh/config` uses `id_ed25519_work` for `github.com` and `bitbucket.org`, and `id_ed25519_personal` for the `github-personal` alias. On macOS the system `ssh-agent` is already available, so no shell startup hook is needed. Use `ssh -vT git@github-personal` to debug which key SSH selects.
+The repository's SSH config is installed by Stow after the first activation.
 
 ## 4. Clone the repo
 
 ```bash
-git clone git@github-personal:Alputer/dotfiles.git ~/dotfiles
+GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519_personal -o IdentitiesOnly=yes' \
+  git clone git@github.com:Alputer/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-## 5. Stow the dotfiles
+## 5. Apply the macOS configuration
+
+The bootstrap script installs Determinate Nix if necessary, then performs the
+first activation. It installs or migrates Homebrew through nix-homebrew,
+declaratively installs the taps, formulae, casks, and Xcode listed in
+`nix/homebrew.nix`, and activates Home Manager for `alputer`:
 
 ```bash
-brew install stow
+./bootstrap.sh
+```
+
+After the first activation, use:
+
+```bash
+sudo darwin-rebuild switch --flake ~/dotfiles#mac
+```
+
+The configuration currently targets Apple Silicon and the user `alputer`; update
+those values in `nix/*.nix` when using another machine or account. Homebrew
+packages not listed in `nix/homebrew.nix` are removed during activation.
+
+## 6. Link dotfiles with Stow
+
+Stow manages the tracked configuration files and directories. From the repo
+root, run:
+
+```bash
 ./stow.sh
 ```
 
-This stows every package directory except `archive/` (retired `karabiner` and `zsh` configs). Edit the `exclude` list in `stow.sh` to skip packages you do not want.
+To restow after edits, run `stow -t ~ -R <packages...>`.
 
-If Stow refuses because a file already exists, move or remove the conflict, then re-run the script.
+## 7. Install mise tools
 
-## 6. Install packages and tools
-
-From the repo root, trust the third-party taps used by the Brewfile, then install:
+From the repo root:
 
 ```bash
-brew trust nikitabobko/tap
-brew trust felixkratz/formulae
-brew bundle
 mise install
 ```
 
-`Brewfile` installs CLI tools, casks, and fonts. `mise install` installs the versions declared in `mise/.config/mise.toml` (already linked to `~/.config/mise.toml` after stowing).
+`mise install` installs the versions declared in `mise/.config/mise.toml`
+(linked to `~/.config/mise.toml` by Stow). The repository's
+nix-darwin Homebrew module is now the source of truth for Homebrew packages.
 
-## 7. Set up Kanata
+## 8. Set up Kanata
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
@@ -104,7 +112,7 @@ Restart the daemon after editing `~/.config/kanata/kanata.kbd`, and whenever a B
 sudo launchctl kickstart -k system/com.kanata.daemon
 ```
 
-## Packages
+## Managed settings
 
 | Package     | Links into                       |
 |-------------|----------------------------------|
@@ -120,7 +128,9 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `starship`   | `~/.config/starship.toml`        |
 | `wezterm`    | `~/.config/wezterm`              |
 
-## Useful Stow commands
+## Stow commands
+
+Stow manages the tracked configuration files listed above.
 
 ```bash
 # Restow after edits

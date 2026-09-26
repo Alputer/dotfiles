@@ -19,11 +19,6 @@ for dir in */; do
   packages+=("$name")
 done
 
-if [[ ${#packages[@]} -eq 0 ]]; then
-  echo "No packages to stow." >&2
-  exit 1
-fi
-
 echo "Stowing into $HOME:"
 printf '  %s\n' "${packages[@]}"
 

@@ -26,3 +26,6 @@ fi
 echo "==> Applying nix-darwin configuration"
 sudo nix run "${darwin_flake}#darwin-rebuild" -- \
   switch --flake "${repo_dir}#mac"
+
+echo "==> Linking dotfiles with Stow"
+"${repo_dir}/stow.sh"

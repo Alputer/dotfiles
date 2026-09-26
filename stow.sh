@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-exclude=(archive nix)
+exclude=(archive)
 
 packages=()
 for dir in */; do

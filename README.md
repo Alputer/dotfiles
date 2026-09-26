@@ -1,26 +1,22 @@
 # Dotfiles
 
-macOS setup for a fresh machine. Nix/nix-darwin owns macOS settings and
-Homebrew, Stow owns user settings, and mise owns CLI and language tool versions.
+macOS setup for a fresh machine: Homebrew, SSH, GNU Stow, and Kanata. Stow
+owns user settings and mise owns CLI and language tool versions.
+
+The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 
 ## Prerequisites
 
 - macOS
-- Apple ID (for the App Store)
 - Terminal with network access
 - A GitHub account with access to this repo
-- Determinate Nix
+- Homebrew
 
 ## 1. Install Xcode
 
 Install **Xcode** from the [App Store](https://apps.apple.com/app/xcode/id497799835). This provides the `xcode-select` developer CLI tools Homebrew needs, and is useful for iOS development.
 
-## 2. Install Determinate Nix
-
-`bootstrap.sh` installs Determinate Nix automatically before the first
-activation, so no separate Nix installation is required.
-
-## 3. Set up SSH for GitHub
+## 2. Set up SSH for GitHub
 
 Cloning uses SSH (`git@github.com:...`), so you need a key loaded in `ssh-agent` and added to GitHub.
 
@@ -49,7 +45,7 @@ pbcopy < ~/.ssh/id_ed25519_personal.pub
 
 The repository's SSH config is installed by Stow after the first activation.
 
-## 4. Clone the repo
+## 3. Clone the repo
 
 ```bash
 GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519_personal -o IdentitiesOnly=yes' \
@@ -57,28 +53,15 @@ GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519_personal -o IdentitiesOnly=yes' \
 cd ~/dotfiles
 ```
 
-## 5. Apply the macOS configuration
+## 4. Install Stow and mise
 
-The bootstrap script installs Determinate Nix if necessary, then performs the
-first activation. It installs or migrates Homebrew through nix-homebrew and
-declaratively installs the taps, formulae, casks, and Xcode listed in
-`nix/homebrew.nix`:
+Install the tools used by this repository:
 
 ```bash
-./bootstrap.sh
+brew install stow mise
 ```
 
-After the first activation, use:
-
-```bash
-sudo darwin-rebuild switch --flake ~/dotfiles#mac
-```
-
-The configuration currently targets Apple Silicon and the user `alputer`; update
-those values in `nix/*.nix` when using another machine or account. Homebrew
-packages not listed in `nix/homebrew.nix` are removed during activation.
-
-## 6. Link dotfiles with Stow
+## 5. Link dotfiles with Stow
 
 Stow manages the tracked configuration files and directories. From the repo
 root, run:
@@ -89,7 +72,7 @@ root, run:
 
 To restow after edits, run `stow -t ~ -R <packages...>`.
 
-## 7. Install mise tools
+## 6. Install mise tools
 
 From the repo root:
 
@@ -98,10 +81,9 @@ mise install
 ```
 
 `mise install` installs the versions declared in `mise/.config/mise.toml`
-(linked to `~/.config/mise.toml` by Stow). The repository's
-nix-darwin Homebrew module is now the source of truth for Homebrew packages.
+(linked to `~/.config/mise.toml` by Stow).
 
-## 8. Set up Kanata
+## 7. Set up Kanata
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 

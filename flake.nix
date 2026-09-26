@@ -9,21 +9,15 @@
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { nix-darwin, nix-homebrew, home-manager, ... }:
+  outputs = { nix-darwin, nix-homebrew, ... }:
     {
       darwinConfigurations.mac = nix-darwin.lib.darwinSystem {
         modules = [
           ./nix/darwin.nix
           nix-homebrew.darwinModules.nix-homebrew
           ./nix/homebrew.nix
-          home-manager.darwinModules.home-manager
-          ./nix/home-manager.nix
         ];
       };
     };

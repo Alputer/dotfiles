@@ -1,8 +1,7 @@
 # Dotfiles
 
 macOS setup for a fresh machine. Nix/nix-darwin owns macOS settings and
-Homebrew, Home Manager owns user settings, and mise owns CLI and language tool
-versions.
+Homebrew, Stow owns user settings, and mise owns CLI and language tool versions.
 
 ## Prerequisites
 
@@ -61,9 +60,9 @@ cd ~/dotfiles
 ## 5. Apply the macOS configuration
 
 The bootstrap script installs Determinate Nix if necessary, then performs the
-first activation. It installs or migrates Homebrew through nix-homebrew,
+first activation. It installs or migrates Homebrew through nix-homebrew and
 declaratively installs the taps, formulae, casks, and Xcode listed in
-`nix/homebrew.nix`, and activates Home Manager for `alputer`:
+`nix/homebrew.nix`:
 
 ```bash
 ./bootstrap.sh

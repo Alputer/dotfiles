@@ -5,8 +5,8 @@ config.font_size = 15
 config.color_scheme = 'Catppuccin Mocha'
 config.window_background_opacity = 0.9
 config.window_decorations = "RESIZE"
+config.enable_kitty_keyboard = true
 
 config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 
 return config
-

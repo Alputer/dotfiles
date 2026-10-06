@@ -1,8 +1,6 @@
 
-# Track SSH config and trusted host keys
-ssh/.ssh/*
-!ssh/.ssh/config
-!ssh/.ssh/known_hosts
+# SSH keys and config stay out of this repo (managed via Bitwarden)
+/ssh/
 
 # Track only zsh config, not artifacts
 zsh/*

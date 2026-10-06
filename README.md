@@ -1,92 +1,141 @@
 # Dotfiles
 
-macOS setup for a fresh machine: Homebrew, SSH, GNU Stow, and Kanata. Stow
-owns user settings and mise owns CLI and language tool versions.
+macOS setup for a fresh machine: Bitwarden-backed SSH, Kanata, and dotfile
+symlinks.
+`bootstrap.sh` symlinks the tracked user settings into `$HOME`; `mise bootstrap`
+installs host packages, casks, and App Store apps, applies macOS preferences,
+and manages CLI and language tool versions.
 
 The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 
 ## Prerequisites
 
-- macOS
+- macOS (Apple Silicon)
 - Terminal with network access
-- A GitHub account with access to this repo
-- Homebrew
+- A GitHub account (SSH keys are stored in Bitwarden; see step 5)
 
-## 1. Install Xcode
+No Homebrew installation is required: `mise bootstrap` pours Homebrew formulae
+and casks directly.
 
-Install **Xcode** from the [App Store](https://apps.apple.com/app/xcode/id497799835). This provides the `xcode-select` developer CLI tools Homebrew needs, and is useful for iOS development.
-
-## 2. Set up SSH for GitHub
-
-Cloning uses SSH (`git@github.com:...`), so you need a key loaded in `ssh-agent` and added to GitHub.
-
-Generate the work and personal keys (skip either command if that key already exists, e.g. restored from backup):
+## 1. Install Command Line Tools
 
 ```bash
-mkdir -p ~/.ssh && chmod 700 ~/.ssh
-ssh-keygen -t ed25519 -C "your-work-email@example.com" -f ~/.ssh/id_ed25519_work
-ssh-keygen -t ed25519 -C "your-personal-email@example.com" -f ~/.ssh/id_ed25519_personal
+xcode-select --install
 ```
 
-Start the agent and add the key:
+This provides `git` and the compiler and signing tools that mise and its
+Homebrew builds need. Full Xcode is not required yet; `mise bootstrap` installs
+Xcode from the App Store (`mas:497799835`) in step 4.
+
+## 2. Install mise
+
+Install mise from its official installer:
 
 ```bash
-ssh-add ~/.ssh/id_ed25519_work
-ssh-add ~/.ssh/id_ed25519_personal
-ssh-add -l
+curl https://mise.run | sh
 ```
 
-Copy each public key and add it to the appropriate work, personal GitHub, or Bitbucket account:
+This places the `mise` binary in `~/.local/bin`, which `zsh/.zshenv` adds to
+`PATH` (and follows with the Homebrew prefix that `mise bootstrap` populates).
+Load it in the current shell:
 
 ```bash
-pbcopy < ~/.ssh/id_ed25519_work.pub
-pbcopy < ~/.ssh/id_ed25519_personal.pub
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
-The repository's SSH config is installed by Stow after the first activation.
+## 3. Bootstrap dotfiles
 
-## 3. Clone the repo
+One command downloads this repo's tarball to `~/.dotfiles` and symlinks every
+tracked package into `$HOME`:
 
 ```bash
-GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519_personal -o IdentitiesOnly=yes' \
-  git clone git@github.com:Alputer/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+curl -fsSL https://raw.githubusercontent.com/Alputer/dotfiles/main/bootstrap.sh | bash
 ```
 
-## 4. Install Stow and mise
+Re-run it any time to refresh; real files that are in the way are moved aside
+to `<file>.bak`. Override the defaults with `DOTFILES_REPO`, `DOTFILES_BRANCH`,
+or `DOTFILES_DIR`. See [Adding a new tool](#adding-a-new-tool) for how the
+symlinks work.
 
-Install the tools used by this repository:
+## 4. Bootstrap the machine
+
+From the repo root (`~/.dotfiles`), preview and apply the declarative setup in
+`mise/.config/mise.toml`:
 
 ```bash
-brew install stow mise
+cd ~/.dotfiles
+mise trust
+mise bootstrap --dry-run
+mise bootstrap
 ```
 
-## 5. Link dotfiles with Stow
+`mise bootstrap` installs the host packages, casks, and App Store apps declared
+in `[bootstrap.packages]` (including Xcode via `mas`), writes the macOS
+preferences in `[bootstrap.macos.*]`, installs Touch ID for `sudo` from
+`[bootstrap.files]`, runs the `bootstrap` task, and finally installs the tools
+in `[tools]`. It is idempotent, so re-run it after editing `mise.toml`. It
+prompts for the `sudo` password for the system-level steps (host name, time
+zone, guest login, `/etc/pam.d/sudo_local`).
 
-Stow manages the tracked configuration files and directories. From the repo
-root, run:
+Xcode installs best-effort: `mas` must be signed in to the App Store, and the
+first run may not put `mas` on `PATH` in time. If Xcode is missing, sign in and
+run `mise bootstrap packages apply --manager mas` afterwards.
+
+Tools resolve from `mise/.config/mise.toml` and are pinned in
+`mise/.config/mise.lock` (linked to `~/.config/mise.lock` by `bootstrap.sh`). To
+update a tool within its declared range, run `mise lock --bump` (or
+`mise use <tool>@<version>`) and commit the refreshed lockfile. To install only
+the pinned tools, `mise install --locked` still works.
+
+Host packages are owned by `[bootstrap.packages]`; removing a declaration stops
+managing it. To clean up packages that are no longer declared, preview and then
+run `mise bootstrap packages prune --dry-run`.
+
+## 5. Set up SSH with Bitwarden
+
+SSH is deliberately **not** tracked in this repo — keys and `~/.ssh/config` stay
+confidential. Bitwarden desktop (installed by `mise bootstrap` in step 4) acts
+as the SSH agent, so private keys live only in your vault.
+
+In the Bitwarden desktop app:
+
+1. **Settings → Enable SSH agent** (there is no scriptable switch; this is the
+   one manual step).
+2. Create or import your SSH keys as **SSH key** items.
+
+Then create `~/.ssh/config` yourself (keep a copy in Bitwarden if you want it
+backed up). Because Bitwarden cannot select a key per host, point `IdentityFile`
+at the **public** key and keep `IdentitiesOnly yes`, so ssh tries only that
+identity and takes the signature from the agent. `zsh/.zshenv` already exports
+`SSH_AUTH_SOCK` to the Bitwarden socket, with a fallback to the system agent
+when the socket is missing; to force Bitwarden for every host regardless, add:
+
+```sshconfig
+Host *
+    IdentityAgent ~/.bitwarden-ssh-agent.sock
+```
+
+Verify:
 
 ```bash
-./stow.sh
+ssh-add -L                  # lists the keys in your vault
+ssh -T git@github-personal  # authenticates as the personal account
 ```
 
-To restow after edits, run `stow -t ~ -R <packages...>`.
+Bitwarden prompts to unlock/authorize on the first signing request.
 
-## 6. Install mise tools
+To sign commits with the same key, add to `git/.gitconfig`:
 
-From the repo root:
-
-```bash
-mise install --locked
+```gitconfig
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
+[user]
+    signingkey = ssh-ed25519 AAAA...
 ```
 
-`mise install --locked` installs the exact versions recorded in
-`mise/.config/mise.lock` (linked to `~/.config/mise.lock` by Stow), resolved
-from the requests in `mise/.config/mise.toml`. To update a tool within its
-declared range, run `mise lock --bump` (or `mise use <tool>@<version>`) and
-commit the refreshed lockfile.
-
-## 7. Set up Kanata
+## 6. Set up Kanata
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
@@ -107,26 +156,37 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `mise`       | `~/.config/mise.toml`, `~/.config/mise.lock` |
 | `nvim`       | `~/.config/nvim`                 |
 | `sketchybar` | `~/.config/sketchybar`           |
-| `ssh`        | `~/.ssh/config`, `~/.ssh/known_hosts` |
 | `starship`   | `~/.config/starship.toml`        |
 | `wezterm`    | `~/.config/wezterm`              |
 | `zsh`        | `~/.zshrc`                       |
 
-## Stow commands
+## Adding a new tool
 
-Stow manages the tracked configuration files listed above.
+Each top-level directory in this repo is a package whose contents mirror
+`$HOME`, and `bootstrap.sh` symlinks every file into place:
+
+```text
+repo path                            →  linked to
+wezterm/.config/wezterm/wezterm.lua  →  ~/.config/wezterm/wezterm.lua
+zsh/.zshrc                           →  ~/.zshrc
+```
+
+To add a tool, mirror its config path under a package directory, then re-run
+`bootstrap.sh` to create the links (existing links are refreshed, and real files
+in the way are moved to `<file>.bak`):
 
 ```bash
-# Restow after edits
-stow -t ~ -R <packages...>
-
-# Remove a package's symlinks
-stow -t ~ -D <package>
+mkdir -p ~/.dotfiles/foo/.config/foo
+mv ~/.config/foo/config.toml ~/.dotfiles/foo/.config/foo/
+~/.dotfiles/bootstrap.sh
 ```
+
+`archive/` and `ssh/` are skipped: the former is retired config, the latter
+stays confidential outside the repo.
 
 ## Git / SSH tips
 
-`~/.ssh/config` maps `github.com` to the work key and `github-personal` to the personal key. For personal repos (including this one), point the remote at the personal host alias:
+Your local, untracked `~/.ssh/config` maps `github.com` to the work key and `github-personal` to the personal key. For personal repos (including this one), point the remote at the personal host alias:
 
 ```bash
 git remote set-url origin git@github-personal:Alputer/dotfiles.git

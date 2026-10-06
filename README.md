@@ -77,11 +77,14 @@ To restow after edits, run `stow -t ~ -R <packages...>`.
 From the repo root:
 
 ```bash
-mise install
+mise install --locked
 ```
 
-`mise install` installs the versions declared in `mise/.config/mise.toml`
-(linked to `~/.config/mise.toml` by Stow).
+`mise install --locked` installs the exact versions recorded in
+`mise/.config/mise.lock` (linked to `~/.config/mise.lock` by Stow), resolved
+from the requests in `mise/.config/mise.toml`. To update a tool within its
+declared range, run `mise lock --bump` (or `mise use <tool>@<version>`) and
+commit the refreshed lockfile.
 
 ## 7. Set up Kanata
 
@@ -101,7 +104,7 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `borders`    | `~/.config/borders`              |
 | `git`        | `~/.gitconfig`                   |
 | `kanata`     | `~/.config/kanata`               |
-| `mise`       | `~/.config/mise.toml`            |
+| `mise`       | `~/.config/mise.toml`, `~/.config/mise.lock` |
 | `nvim`       | `~/.config/nvim`                 |
 | `sketchybar` | `~/.config/sketchybar`           |
 | `ssh`        | `~/.ssh/config`, `~/.ssh/known_hosts` |

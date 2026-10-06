@@ -48,3 +48,6 @@ zoxide = "0.10.0"
 
 [env]
 CLOUDSDK_PYTHON = { value = "{{ tools.python.path }}/bin/python", tools = true }
+
+[settings]
+lockfile = true

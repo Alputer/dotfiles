@@ -5,8 +5,8 @@ ssh/.ssh/*
 !ssh/.ssh/known_hosts
 
 # Track only zsh config, not artifacts
-archive/zsh/*
-!archive/zsh/.zshrc
+zsh/*
+!zsh/.zshrc
 
 # Neovim artifact?
 .local

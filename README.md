@@ -99,7 +99,6 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 |-------------|----------------------------------|
 | `aerospace`  | `~/.config/aerospace`            |
 | `borders`    | `~/.config/borders`              |
-| `fish`       | `~/.config/fish`                 |
 | `git`        | `~/.gitconfig`                   |
 | `kanata`     | `~/.config/kanata`               |
 | `mise`       | `~/.config/mise.toml`            |
@@ -108,6 +107,7 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `ssh`        | `~/.ssh/config`, `~/.ssh/known_hosts` |
 | `starship`   | `~/.config/starship.toml`        |
 | `wezterm`    | `~/.config/wezterm`              |
+| `zsh`        | `~/.zshrc`                       |
 
 ## Stow commands
 

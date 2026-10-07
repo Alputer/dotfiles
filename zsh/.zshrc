@@ -13,9 +13,6 @@ eval "$(starship init zsh)"
 # zoxide
 eval "$(zoxide init zsh)"
 
-# atuin
-eval "$(atuin init zsh)"
-
 # system info once per boot
 if [[ -o interactive ]]; then
   stamp_file="$XDG_CACHE_HOME/fastfetch-boot"

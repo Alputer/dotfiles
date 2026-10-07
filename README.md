@@ -162,7 +162,34 @@ A `gpgsig` block means it signed. `git log --show-signature` additionally wants
 a `gpg.ssh.allowedSignersFile` to verify against; that is only needed when you
 want git to check signatures, not when you want them written.
 
-## 6. Kanata
+## 6. Switch the checkout to SSH
+
+Step 3 cloned over HTTPS because a fresh machine has no SSH keys yet. Now that
+the agent is verified (step 5), replace the checkout with an SSH clone so `push`
+and `pull` use the agent and no credentials are stored on disk.
+
+```bash
+echo "$SSH_AUTH_SOCK"       # must be ~/.bitwarden-ssh-agent.sock, not the system agent
+ssh-add -L                 # public keys that agent holds; empty means it is locked
+ssh -vT git@github-personal # greets you by username, exit code 1 on success
+```
+
+Then clone:
+
+```bash
+rm -rf ~/dotfiles && git clone git@github-personal:Alputer/dotfiles.git ~/dotfiles
+```
+
+Re-link the symlinks into the new checkout (`rm -rf` left them dangling):
+
+```bash
+mise bootstrap
+```
+
+After this, use `mise bootstrap` — not `--from` — for future runs, since `--from`
+requires `origin` to match the requested URL.
+
+## 7. Kanata
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
@@ -238,7 +265,7 @@ installed. It is idempotent, so running it on an unchanged config does nothing.
 Preview first with `mise bootstrap --dry-run`, or scope it to one phase:
 `mise dot apply` for links only, `mise install` for tools only.
 
-Once `origin` uses an SSH host alias rather than `github.com`, use `mise
+Once `origin` uses an SSH host alias rather than `github.com` (step 6), use `mise
 bootstrap` — not `--from`, which requires the origin to match the requested URL.
 
 ## Updating tools and packages
@@ -248,8 +275,7 @@ tool versions and pins them in `mise.lock`, while Homebrew formulae and casks
 are re-poured from their current bottles.
 
 ```bash
-mise upgrade                                       # tools, within declared ranges
-mise lock --bump && mise install                   # refresh mise.lock, then commit it
+mise lock --bump && mise install --locked           # refresh mise.lock, then commit it
 mise bootstrap packages upgrade --manager brew      # formulae
 mise bootstrap packages upgrade --manager brew-cask # casks
 ```

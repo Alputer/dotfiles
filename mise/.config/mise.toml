@@ -51,7 +51,23 @@ zoxide = "0.10.0"
 CLOUDSDK_PYTHON = { value = "{{ tools.python.path }}/bin/python", tools = true }
 
 [settings]
+dotfiles.root = "~/dotfiles"
+dotfiles.relative_symlinks = true
 lockfile = true
+
+[dotfiles]
+"~/.config/aerospace" = "~/dotfiles/aerospace/.config/aerospace"
+"~/.config/borders" = "~/dotfiles/borders/.config/borders"
+"~/.gitconfig" = "~/dotfiles/git/.gitconfig"
+"~/.config/kanata" = "~/dotfiles/kanata/.config/kanata"
+"~/.config/mise.toml" = "~/dotfiles/mise/.config/mise.toml"
+"~/.config/mise.lock" = "~/dotfiles/mise/.config/mise.lock"
+"~/.config/nvim" = "~/dotfiles/nvim/.config/nvim"
+"~/.config/sketchybar" = "~/dotfiles/sketchybar/.config/sketchybar"
+"~/.config/starship.toml" = "~/dotfiles/starship/.config/starship.toml"
+"~/.config/wezterm" = "~/dotfiles/wezterm/.config/wezterm"
+"~/.zshrc" = "~/dotfiles/zsh/.zshrc"
+"~/.zshenv" = "~/dotfiles/zsh/.zshenv"
 
 # =============================================================================
 # Machine bootstrap
@@ -62,6 +78,12 @@ lockfile = true
 #
 # mise itself is installed from https://mise.run, not declared here.
 # =============================================================================
+
+# The checkout is cloned by `mise bootstrap --from` (see README), so it is
+# deliberately absent from [bootstrap.repos]: the config declaring the repo
+# lives inside that checkout, and the configured origin uses the ~/.ssh/config
+# github-personal alias, which repos does not treat as the same host as
+# git@github.com.
 
 # Third-party Homebrew taps.
 [bootstrap.brew.taps]

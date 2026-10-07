@@ -2,9 +2,10 @@
 
 macOS setup for a fresh machine: Bitwarden-backed SSH, Kanata, and dotfile
 symlinks.
-`bootstrap.sh` symlinks the tracked user settings into `$HOME`; `mise bootstrap`
-installs host packages, casks, and App Store apps, applies macOS preferences,
-and manages CLI and language tool versions.
+`mise bootstrap --from` clones this repo and applies the machine setup: it
+links the tracked dotfiles declared in `[dotfiles]`, installs host packages,
+casks, and App Store apps, applies macOS preferences, and manages CLI and
+language tool versions.
 
 The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 
@@ -25,7 +26,7 @@ xcode-select --install
 
 This provides `git` and the compiler and signing tools that mise and its
 Homebrew builds need. Full Xcode is not required yet; `mise bootstrap` installs
-Xcode from the App Store (`mas:497799835`) in step 4.
+Xcode from the App Store (`mas:497799835`) in step 3.
 
 ## 2. Install mise
 
@@ -43,46 +44,57 @@ Load it in the current shell:
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-## 3. Bootstrap dotfiles
+## 3. Bootstrap the machine
 
-One command downloads this repo's tarball to `~/.dotfiles` and symlinks every
-tracked package into `$HOME`:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/Alputer/dotfiles/main/bootstrap.sh | bash
-```
-
-Re-run it any time to refresh; real files that are in the way are moved aside
-to `<file>.bak`. Override the defaults with `DOTFILES_REPO`, `DOTFILES_BRANCH`,
-or `DOTFILES_DIR`. See [Adding a new tool](#adding-a-new-tool) for how the
-symlinks work.
-
-## 4. Bootstrap the machine
-
-From the repo root (`~/.dotfiles`), preview and apply the declarative setup in
+One command clones this repo and applies everything declared in
 `mise/.config/mise.toml`:
 
 ```bash
-cd ~/.dotfiles
-mise trust
-mise bootstrap --dry-run
-mise bootstrap
+mise bootstrap --from https://github.com/Alputer/dotfiles.git --from-dir ~/dotfiles
 ```
 
-`mise bootstrap` installs the host packages, casks, and App Store apps declared
-in `[bootstrap.packages]` (including Xcode via `mas`), writes the macOS
-preferences in `[bootstrap.macos.*]`, installs Touch ID for `sudo` from
-`[bootstrap.files]`, runs the `bootstrap` task, and finally installs the tools
-in `[tools]`. It is idempotent, so re-run it after editing `mise.toml`. It
+`--from` clones the repo, trusts it for the invocation, and runs the full
+bootstrap from its config; `--from-dir` places the checkout at `~/dotfiles`,
+where the `[dotfiles]` sources and `dotfiles.root` expect it. Use the HTTPS
+URL: a fresh machine has no SSH keys or `~/.ssh/config` yet (see step 5).
+Preview the plan first by adding `--dry-run`, or pass `--yes` to apply
+unattended.
+
+The run links the tracked dotfiles in `[dotfiles]` (see
+[Adding a new tool](#adding-a-new-tool) for how the links work), installs the
+host packages, casks, and App Store apps declared in `[bootstrap.packages]`
+(including Xcode via `mas`), writes the macOS preferences in
+`[bootstrap.macos.*]`, installs Touch ID for `sudo` from `[bootstrap.files]`,
+runs the `bootstrap` task, and finally installs the tools in `[tools]`. It
 prompts for the `sudo` password for the system-level steps (host name, time
 zone, guest login, `/etc/pam.d/sudo_local`).
+
+Dotfile conflicts (a real file where a link belongs) are refused by default:
+move the file aside, or pass `--force-dotfiles` to let bootstrap replace it
+(`mise dot apply --force` for the dotfiles phase alone).
 
 Xcode installs best-effort: `mas` must be signed in to the App Store, and the
 first run may not put `mas` on `PATH` in time. If Xcode is missing, sign in and
 run `mise bootstrap packages apply --manager mas` afterwards.
 
+## 4. Updates and re-runs
+
+The checkout at `~/dotfiles` is a normal git clone and its mise config is
+linked into `~/.config/mise.toml`, so after provisioning, updates are just:
+
+```bash
+git -C ~/dotfiles pull --ff-only
+mise bootstrap
+```
+
+`mise bootstrap` is idempotent; re-run it after editing `mise.toml`, and
+`mise dot apply --dry-run` previews just the links. Do not re-run `--from`
+once you have switched `origin` to the `github-personal` SSH alias (see
+[Git / SSH tips](#git--ssh-tips)): `--from` requires the existing checkout's
+origin to match the requested URL.
+
 Tools resolve from `mise/.config/mise.toml` and are pinned in
-`mise/.config/mise.lock` (linked to `~/.config/mise.lock` by `bootstrap.sh`). To
+`mise/.config/mise.lock` (linked to `~/.config/mise.lock` by `[dotfiles]`). To
 update a tool within its declared range, run `mise lock --bump` (or
 `mise use <tool>@<version>`) and commit the refreshed lockfile. To install only
 the pinned tools, `mise install --locked` still works.
@@ -94,7 +106,7 @@ run `mise bootstrap packages prune --dry-run`.
 ## 5. Set up SSH with Bitwarden
 
 SSH is deliberately **not** tracked in this repo — keys and `~/.ssh/config` stay
-confidential. Bitwarden desktop (installed by `mise bootstrap` in step 4) acts
+confidential. Bitwarden desktop (installed by `mise bootstrap` in step 3) acts
 as the SSH agent, so private keys live only in your vault.
 
 In the Bitwarden desktop app:
@@ -158,12 +170,13 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `sketchybar` | `~/.config/sketchybar`           |
 | `starship`   | `~/.config/starship.toml`        |
 | `wezterm`    | `~/.config/wezterm`              |
-| `zsh`        | `~/.zshrc`                       |
+| `zsh`        | `~/.zshrc`, `~/.zshenv`          |
 
 ## Adding a new tool
 
 Each top-level directory in this repo is a package whose contents mirror
-`$HOME`, and `bootstrap.sh` symlinks every file into place:
+`$HOME`, and the `[dotfiles]` section in `mise/.config/mise.toml` links each
+target into place:
 
 ```text
 repo path                            →  linked to
@@ -171,18 +184,20 @@ wezterm/.config/wezterm/wezterm.lua  →  ~/.config/wezterm/wezterm.lua
 zsh/.zshrc                           →  ~/.zshrc
 ```
 
-To add a tool, mirror its config path under a package directory, then re-run
-`bootstrap.sh` to create the links (existing links are refreshed, and real files
-in the way are moved to `<file>.bak`):
+To add a tool, mirror its config path under a package directory, add a target to
+`[dotfiles]`, then apply it:
 
 ```bash
-mkdir -p ~/.dotfiles/foo/.config/foo
-mv ~/.config/foo/config.toml ~/.dotfiles/foo/.config/foo/
-~/.dotfiles/bootstrap.sh
+mkdir -p ~/dotfiles/foo/.config/foo
+mv ~/.config/foo/config.toml ~/dotfiles/foo/.config/foo/
+$EDITOR ~/dotfiles/mise/.config/mise.toml  # "~/.config/foo" = "~/dotfiles/foo/.config/foo"
+mise dot apply                             # or: mise bootstrap
 ```
 
-`archive/` and `ssh/` are skipped: the former is retired config, the latter
-stays confidential outside the repo.
+`mise dot apply --dry-run` previews the links and `mise dot status` shows what
+is applied; links already pointing at the right source are left alone. A real
+file in the way is a conflict — move it aside, or add `--force`. `archive/` is
+not linked: it is retired config.
 
 ## Git / SSH tips
 

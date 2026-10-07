@@ -47,6 +47,11 @@ jq = "1.8.2"
 ripgrep = "15.2.0"
 zoxide = "0.10.0"
 
+# Container runtimes and the Mac App Store CLI
+colima = "0.10.3"
+container = "1.5.0"
+mas = "7.0.0"
+
 [env]
 CLOUDSDK_PYTHON = { value = "{{ tools.python.path }}/bin/python", tools = true }
 
@@ -104,14 +109,10 @@ lockfile = true
 "brew:libyaml" = "latest"
 "brew:readline" = "latest"
 
-# Host CLIs and macOS integrations.
+# macOS integrations and shell plugins.
 "brew:FelixKratz/formulae/borders" = "latest"
 "brew:FelixKratz/formulae/sketchybar" = "latest"
-"brew:colima" = "latest"
-"brew:container" = "latest"
-"brew:fish" = "latest"
 "brew:kanata" = "latest"
-"brew:mas" = "latest"
 "brew:zsh-autosuggestions" = "latest"
 "brew:zsh-history-substring-search" = "latest"
 "brew:zsh-syntax-highlighting" = "latest"
@@ -137,8 +138,8 @@ lockfile = true
 "brew-cask:whatsapp" = "latest"
 "brew-cask:zoom" = "latest"
 
-# Mac App Store (requires the `mas` CLI, installed above).
-"mas:497799835" = "latest" # Xcode
+# Xcode is installed manually in README step 4: `mas` is a mise tool now, so it
+# is not on PATH while the packages phase runs.
 
 # macOS preferences (from archive/nix/darwin.nix system.defaults).
 [bootstrap.macos.dock]

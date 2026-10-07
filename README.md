@@ -1,11 +1,7 @@
 # Dotfiles
 
-macOS setup for a fresh machine: Bitwarden-backed SSH, Kanata, and dotfile
-symlinks.
-`mise bootstrap --from` clones this repo and applies the machine setup: it
-links the tracked dotfiles declared in `[dotfiles]`, installs host packages,
-casks, and App Store apps, applies macOS preferences, and manages CLI and
-language tool versions.
+Fresh-machine macOS setup: dotfile symlinks, Homebrew packages, and CLI/language
+tool versions, all declared in `mise/.config/mise.toml`.
 
 The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 
@@ -15,128 +11,77 @@ The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 - Terminal with network access
 - A GitHub account (SSH keys are stored in Bitwarden; see step 5)
 
-No Homebrew installation is required: `mise bootstrap` pours Homebrew formulae
-and casks directly.
+Homebrew is not required: `mise bootstrap` pours formulae and casks directly.
 
-## 1. Install Command Line Tools
+## 1. Command Line Tools
 
 ```bash
 xcode-select --install
 ```
 
-This provides `git` and the compiler and signing tools that mise and its
-Homebrew builds need. Full Xcode is not required yet; `mise bootstrap` installs
-Xcode from the App Store (`mas:497799835`) in step 3.
+Provides `git` and the compiler tools mise needs. Full Xcode comes in step 4.
 
-## 2. Install mise
-
-Install mise from its official installer:
+## 2. mise
 
 ```bash
 curl https://mise.run | sh
+export PATH="$HOME/.local/bin:$PATH"   # for this shell
 ```
 
-This places the `mise` binary in `~/.local/bin`, which `zsh/.zshenv` adds to
-`PATH` (and follows with the Homebrew prefix that `mise bootstrap` populates).
-Load it in the current shell:
+Installs to `~/.local/bin`, which `zsh/.zshenv` already puts on `PATH`.
 
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-```
-
-## 3. Bootstrap the machine
-
-One command clones this repo and applies everything declared in
-`mise/.config/mise.toml`:
+## 3. Bootstrap
 
 ```bash
 mise bootstrap --from https://github.com/Alputer/dotfiles.git --from-dir ~/dotfiles
 ```
 
-`--from` clones the repo, trusts it for the invocation, and runs the full
-bootstrap from its config; `--from-dir` places the checkout at `~/dotfiles`,
-where the `[dotfiles]` sources and `dotfiles.root` expect it. Use the HTTPS
-URL: a fresh machine has no SSH keys or `~/.ssh/config` yet (see step 5).
-Preview the plan first by adding `--dry-run`, or pass `--yes` to apply
-unattended.
+Clones the repo and applies everything: links dotfiles, installs packages and
+casks, writes macOS preferences, installs Touch ID for `sudo`, runs the
+`bootstrap` task, then installs `[tools]`. Prompts for `sudo` on the system-level
+steps.
 
-The run links the tracked dotfiles in `[dotfiles]` (see
-[Adding a new tool](#adding-a-new-tool) for how the links work), installs the
-host packages, casks, and App Store apps declared in `[bootstrap.packages]`
-(including Xcode via `mas`), writes the macOS preferences in
-`[bootstrap.macos.*]`, installs Touch ID for `sudo` from `[bootstrap.files]`,
-runs the `bootstrap` task, and finally installs the tools in `[tools]`. It
-prompts for the `sudo` password for the system-level steps (host name, time
-zone, guest login, `/etc/pam.d/sudo_local`).
+- `--from-dir` places the checkout at `~/dotfiles`, where `[dotfiles]` expects it.
+- Use the HTTPS URL; a fresh machine has no SSH keys yet (step 5).
+- Add `--dry-run` to preview, `--yes` to run unattended.
+- A real file where a link belongs is refused; use `--force-dotfiles` to replace it.
 
-Dotfile conflicts (a real file where a link belongs) are refused by default:
-move the file aside, or pass `--force-dotfiles` to let bootstrap replace it
-(`mise dot apply --force` for the dotfiles phase alone).
+## 4. Xcode
 
-Xcode installs best-effort: `mas` must be signed in to the App Store, and the
-first run may not put `mas` on `PATH` in time. If Xcode is missing, sign in and
-run `mise bootstrap packages apply --manager mas` afterwards.
-
-## 4. Updates and re-runs
-
-The checkout at `~/dotfiles` is a normal git clone and its mise config is
-linked into `~/.config/mise.toml`, so after provisioning, updates are just:
+Installed manually because `mas` is a mise tool, so it is not on `PATH` during
+the bootstrap packages phase.
 
 ```bash
-git -C ~/dotfiles pull --ff-only
-mise bootstrap
+eval "$(mise activate zsh)"
+mas account                   # sign in to the App Store
+mas install 497799835         # Xcode
+sudo xcodebuild -license accept
 ```
 
-`mise bootstrap` is idempotent; re-run it after editing `mise.toml`, and
-`mise dot apply --dry-run` previews just the links. Do not re-run `--from`
-once you have switched `origin` to the `github-personal` SSH alias (see
-[Git / SSH tips](#git--ssh-tips)): `--from` requires the existing checkout's
-origin to match the requested URL.
+## 5. SSH with Bitwarden
 
-Tools resolve from `mise/.config/mise.toml` and are pinned in
-`mise/.config/mise.lock` (linked to `~/.config/mise.lock` by `[dotfiles]`). To
-update a tool within its declared range, run `mise lock --bump` (or
-`mise use <tool>@<version>`) and commit the refreshed lockfile. To install only
-the pinned tools, `mise install --locked` still works.
+SSH is **not** tracked here — keys and `~/.ssh/config` stay confidential.
+Bitwarden desktop (installed in step 3) is the SSH agent.
 
-Host packages are owned by `[bootstrap.packages]`; removing a declaration stops
-managing it. To clean up packages that are no longer declared, preview and then
-run `mise bootstrap packages prune --dry-run`.
+In the app: enable **Settings → Enable SSH agent**, then add your keys as **SSH
+key** items.
 
-## 5. Set up SSH with Bitwarden
-
-SSH is deliberately **not** tracked in this repo — keys and `~/.ssh/config` stay
-confidential. Bitwarden desktop (installed by `mise bootstrap` in step 3) acts
-as the SSH agent, so private keys live only in your vault.
-
-In the Bitwarden desktop app:
-
-1. **Settings → Enable SSH agent** (there is no scriptable switch; this is the
-   one manual step).
-2. Create or import your SSH keys as **SSH key** items.
-
-Then create `~/.ssh/config` yourself (keep a copy in Bitwarden if you want it
-backed up). Because Bitwarden cannot select a key per host, point `IdentityFile`
-at the **public** key and keep `IdentitiesOnly yes`, so ssh tries only that
-identity and takes the signature from the agent. `zsh/.zshenv` already exports
-`SSH_AUTH_SOCK` to the Bitwarden socket, with a fallback to the system agent
-when the socket is missing; to force Bitwarden for every host regardless, add:
+Write `~/.ssh/config` yourself. Point `IdentityFile` at the **public** key and
+keep `IdentitiesOnly yes`, so ssh tries only that identity and signs via the
+agent. `zsh/.zshenv` exports `SSH_AUTH_SOCK` with a system-agent fallback; to
+force Bitwarden always:
 
 ```sshconfig
 Host *
     IdentityAgent ~/.bitwarden-ssh-agent.sock
 ```
 
-Verify:
+Verify, then sign commits with the same key:
 
 ```bash
-ssh-add -L                  # lists the keys in your vault
-ssh -T git@github-personal  # authenticates as the personal account
+ssh-add -L
+ssh -T git@github-personal
 ```
-
-Bitwarden prompts to unlock/authorize on the first signing request.
-
-To sign commits with the same key, add to `git/.gitconfig`:
 
 ```gitconfig
 [gpg]
@@ -147,11 +92,12 @@ To sign commits with the same key, add to `git/.gitconfig`:
     signingkey = ssh-ed25519 AAAA...
 ```
 
-## 6. Set up Kanata
+## 6. Kanata
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
-Restart the daemon after editing `~/.config/kanata/kanata.kbd`, and whenever a Bluetooth keyboard connects after boot or wake (Kanata may miss devices that appear after it starts):
+Restart the daemon after editing `kanata.kbd`, and after any Bluetooth keyboard
+connects post-boot (it may miss devices that appear after starting):
 
 ```bash
 sudo launchctl kickstart -k system/com.kanata.daemon
@@ -172,49 +118,83 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `wezterm`    | `~/.config/wezterm`              |
 | `zsh`        | `~/.zshrc`, `~/.zshenv`          |
 
-## Adding a new tool
+## Adding a new dotfile
 
-Each top-level directory in this repo is a package whose contents mirror
-`$HOME`, and the `[dotfiles]` section in `mise/.config/mise.toml` links each
-target into place:
-
-```text
-repo path                            →  linked to
-wezterm/.config/wezterm/wezterm.lua  →  ~/.config/wezterm/wezterm.lua
-zsh/.zshrc                           →  ~/.zshrc
-```
-
-To add a tool, mirror its config path under a package directory, add a target to
-`[dotfiles]`, then apply it:
+Move the live config into its package directory, then add the entry:
 
 ```bash
-mkdir -p ~/dotfiles/foo/.config/foo
-mv ~/.config/foo/config.toml ~/dotfiles/foo/.config/foo/
-$EDITOR ~/dotfiles/mise/.config/mise.toml  # "~/.config/foo" = "~/dotfiles/foo/.config/foo"
-mise dot apply                             # or: mise bootstrap
+mv ~/.config/foo/config.toml ~/dotfiles/foo/.config/foo/config.toml
+mise dot add -p ~/dotfiles/mise/.config/mise.toml \
+  --source ~/dotfiles/foo/.config/foo/config.toml \
+  ~/.config/foo/config.toml
 ```
 
-`mise dot apply --dry-run` previews the links and `mise dot status` shows what
-is applied; links already pointing at the right source are left alone. A real
-file in the way is a conflict — move it aside, or add `--force`. `archive/` is
-not linked: it is retired config.
+This writes `"~/.config/foo/config.toml" = "~/dotfiles/foo/.config/foo/config.toml"`
+into `[dotfiles]` and links the target. Preview with `--dry-run`.
 
-## Git / SSH tips
+Both flags are required here:
 
-Your local, untracked `~/.ssh/config` maps `github.com` to the work key and `github-personal` to the personal key. For personal repos (including this one), point the remote at the personal host alias:
+- `-p` — the config is `mise/.config/mise.toml`, symlinked from
+  `~/.config/mise.toml`. Without it mise writes to `~/.config/mise/config.toml`,
+  a second file that is not tracked.
+- `--source` — without it mise seeds the source at the repo root
+  (`~/dotfiles/.config/foo/config.toml`) instead of the package directory that
+  every other entry uses.
+
+Check what is linked, or diff pending changes:
 
 ```bash
-git remote set-url origin git@github-personal:Alputer/dotfiles.git
+mise dot status
+mise dot diff
 ```
 
-Verify which account SSH authenticates as:
+A real file where a link belongs is a conflict — move it aside or pass `--force`.
+`archive/` is retired config and is not linked.
+
+### Applying changes
+
+To apply edits you made locally in `~/dotfiles`:
 
 ```bash
-ssh -T git@github-personal
+mise bootstrap
 ```
 
-For work GitHub repositories, use the normal host:
+That is the whole command. `~/.config/mise.toml` is a symlink into the checkout,
+so your edits are already live; bootstrap re-reads the config and brings the
+machine in line with it — new links applied, new packages poured, new tools
+installed. It is idempotent, so running it on an unchanged config does nothing.
+
+Preview first with `mise bootstrap --dry-run`, or scope it to one phase:
+`mise dot apply` for links only, `mise install` for tools only.
+
+Once `origin` uses an SSH host alias rather than `github.com`, use `mise
+bootstrap` — not `--from`, which requires the origin to match the requested URL.
+
+## Updating tools and packages
+
+`[tools]` and `[bootstrap.packages]` update through separate commands: mise owns
+tool versions and pins them in `mise.lock`, while Homebrew formulae and casks
+are re-poured from their current bottles.
 
 ```bash
-git remote set-url origin git@github.com:ORG/REPOSITORY.git
+mise upgrade                                       # tools, within declared ranges
+mise lock --bump && mise install                   # refresh mise.lock, then commit it
+mise bootstrap packages upgrade --manager brew      # formulae
+mise bootstrap packages upgrade --manager brew-cask # casks
+```
+
+Preview any of the package commands with `--dry-run` first, and append
+`--manager` to target one manager. `mise bootstrap packages upgrade` only touches
+packages declared in `[bootstrap.packages]`; anything else in the Cellar is left
+alone.
+
+To adopt a newer version deliberately, bump it in `mise/.config/mise.toml`
+(`mise use <tool>@<version>` does this for you) and commit the refreshed
+`mise.lock` alongside it.
+
+Removing a declaration stops mise managing a package but does not uninstall it.
+Clean those up with:
+
+```bash
+mise bootstrap packages prune --manager brew --dry-run
 ```

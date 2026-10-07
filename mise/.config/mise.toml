@@ -76,21 +76,6 @@ lockfile = true
 "~/.zshrc" = "~/dotfiles/zsh/.zshrc"
 "~/.zshenv" = "~/dotfiles/zsh/.zshenv"
 
-# =============================================================================
-# Machine bootstrap
-#
-# `mise bootstrap` applies everything below in one idempotent run. This is the
-# NixOS-independent replacement for the archived nix-darwin configuration in
-# archive/nix/. Preview changes with `mise bootstrap --dry-run`.
-#
-# mise itself is installed from https://mise.run, not declared here.
-# =============================================================================
-
-# The checkout is cloned by `mise bootstrap --from` (see README), so it is
-# deliberately absent from [bootstrap.repos]: the config declaring the repo
-# lives inside that checkout, and the configured origin uses the ~/.ssh/config
-# github-personal alias, which repos does not treat as the same host as
-# git@github.com.
 
 # Third-party Homebrew taps.
 [bootstrap.brew.taps]
@@ -143,26 +128,32 @@ lockfile = true
 # Xcode is installed manually in README step 4: `mas` is a mise tool now, so it
 # is not on PATH while the packages phase runs.
 
+# Login shell for this user.
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
 # macOS preferences (from archive/nix/darwin.nix system.defaults).
 [bootstrap.macos.dock]
 autohide = true
-tilesize = 48
+tilesize = 96
 show_recents = false
 apps = [
+  "/System/Library/CoreServices/Finder.app",
   "/Applications/Brave Browser.app",
   "/Applications/Slack.app",
   "/Applications/Notion.app",
   "/Applications/WezTerm.app",
+  "/Applications/WhatsApp.app",
+  "/Applications/Bitwarden.app",
 ]
 
 [bootstrap.macos.finder]
 show_all_files = true
-preferred_view_style = "column" # FXPreferredViewStyle = "clmv"
 
 [bootstrap.macos.keyboard]
 press_and_hold = false # ApplePressAndHoldEnabled = false
-key_repeat = 2
-initial_key_repeat = 15
+key_repeat = 5
+initial_key_repeat = 25
 
 [bootstrap.macos.trackpad]
 tap_to_click = true # trackpad.Clicking = true
@@ -179,19 +170,12 @@ AppleShowAllExtensions = true
 FXDefaultSearchScope = "SCcf"
 "_FXShowPosixPathInTitle" = true
 
-[bootstrap.macos.defaults."com.apple.screencapture"]
-location = "/Users/alputer/Pictures/Screenshots"
-
 # Touch ID for sudo (security.pam.services.sudo_local.touchIdAuth).
 [bootstrap.files."/etc/pam.d/sudo_local"]
 content = "auth       sufficient     pam_tid.so\n"
 owner = "root"
 group = "wheel"
 mode = "0644"
-
-# Login shell for this user.
-[bootstrap.user]
-login_shell = "/bin/zsh"
 
 # System-level settings mise cannot express declaratively. Guarded so repeated
 # runs do not ask for sudo again once the machine is converged.
@@ -216,12 +200,4 @@ if [ "$(sudo /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow G
   sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
 fi
 
-# SSH directory. The dotfiles phase above links ~/.ssh/{config,known_hosts} into
-# the checkout, but nothing sets the 0700 the directory itself needs.
-if [ -d "$HOME/.ssh" ]; then
-  chmod 700 "$HOME/.ssh"
-fi
-
-# Reload apps that cache preferences
-/usr/bin/killall Dock Finder SystemUIServer 2>/dev/null || true
 """

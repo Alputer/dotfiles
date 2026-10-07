@@ -36,7 +36,6 @@ starship = "1.26.0"
 tree-sitter = "0.26.11"
 
 # Everyday CLI utilities
-atuin = "18.23.0"
 bat = "0.26.1"
 bitwarden = "2026.9.0"
 eza = "0.23.5"
@@ -145,6 +144,9 @@ apps = [
   "/Applications/WezTerm.app",
   "/Applications/WhatsApp.app",
   "/Applications/Bitwarden.app",
+  "/Applications/Tailscale.app",
+  "/Applications/Xcode.app",
+  "/System/Applications/System Settings.app",
 ]
 
 [bootstrap.macos.finder]

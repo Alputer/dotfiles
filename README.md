@@ -36,10 +36,10 @@ Installs to `~/.local/bin`, which `zsh/.zshenv` already puts on `PATH`.
 mise bootstrap --from https://github.com/Alputer/dotfiles.git --from-dir ~/dotfiles
 ```
 
-Clones the repo and applies everything: links dotfiles, installs packages and
-casks, writes macOS preferences, installs Touch ID for `sudo`, runs the
-`bootstrap` task, then installs `[tools]`. Prompts for `sudo` on the system-level
-steps.
+Clones the repo and applies everything: links dotfiles (including `~/.ssh/config`
+and `~/.ssh/known_hosts`), installs packages and casks, writes macOS preferences,
+installs Touch ID for `sudo`, runs the `bootstrap` task, then installs `[tools]`.
+Prompts for `sudo` on the system-level steps.
 
 - `--from-dir` places the checkout at `~/dotfiles`, where `[dotfiles]` expects it.
 - Use the HTTPS URL; a fresh machine has no SSH keys yet (step 5).
@@ -60,37 +60,101 @@ sudo xcodebuild -license accept
 
 ## 5. SSH with Bitwarden
 
-SSH is **not** tracked here — keys and `~/.ssh/config` stay confidential.
-Bitwarden desktop (installed in step 3) is the SSH agent.
+Nothing to run here: `ssh/.ssh/config` and `ssh/.ssh/known_hosts` are tracked and
+symlinked into `~/.ssh` by the dotfiles phase of `mise bootstrap` (step 3). Only
+the private keys stay out of the repo — those live in Bitwarden. Edit the files
+in the checkout; the symlinks point at the working tree, so changes are live
+without any further command.
 
-In the app: enable **Settings → Enable SSH agent**, then add your keys as **SSH
-key** items.
+The rest of this step is activating the Bitwarden agent.
 
-Write `~/.ssh/config` yourself. Point `IdentityFile` at the **public** key and
-keep `IdentitiesOnly yes`, so ssh tries only that identity and signs via the
-agent. `zsh/.zshenv` exports `SSH_AUTH_SOCK` with a system-agent fallback; to
-force Bitwarden always:
+### 5.1 Activate the Bitwarden SSH agent
+
+The keys are already in the vault as **SSH key** items, and the desktop app is
+already installed by step 3 as a Homebrew cask. That cask is the `.dmg` build,
+which is what the agent needs; the App Store build sandboxes the socket into its
+container directory and `~/.bitwarden-ssh-agent.sock` never appears.
+
+Activating the agent therefore means turning it on and pointing `ssh`, `git`,
+and everything else at the socket the app exposes.
+
+1. **Turn the agent on:** *Settings → Enable SSH agent*. Set **Ask for
+   authorization when using SSH agent** to whatever prompt cadence you want
+   (every use, once per hour, or never). The agent is bound to your vault, so
+   signing while the vault is locked fails.
+
+2. **Point `ssh` at the agent.** `zsh/.zshenv` already exports
+   `SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock`, falling back to the system
+   agent when that socket is absent. Open a new shell (or re-source) so the
+   export runs after the app has created the socket.
+
+3. **Confirm the vault keys are exposed:**
+
+   ```bash
+   ssh-add -L                 # should print the public keys of your SSH key items
+   ssh -T git@github.com      # should greet you by username
+   ```
+
+   Every key you intend to use must be an **SSH key** vault item — keys stored
+   as files or attachments are invisible to the agent, and the agent cannot
+   read them either. `The agent has no identities` means the vault is locked or
+   no SSH key items exist; `communication with agent failed` means
+   `SSH_AUTH_SOCK` points at the wrong path, usually an App Store build.
+
+   To add or import a key later: *New → SSH key*, generate an Ed25519 key
+   in-app or paste an existing one with **Import key from clipboard**. Imports
+   must be OpenSSH or PKCS#8; PuTTYgen keys are not supported.
+
+4. **Make the agent authoritative.** `ssh/.ssh/config` currently points
+   `IdentityFile` at private key files that still exist on disk, so `ssh` reads
+   those files and never consults the agent. Switch each `IdentityFile` to the
+   matching `.pub` and add `IdentityAgent`, then the private files can be
+   deleted:
+
+   ```bash
+   rm ~/.ssh/id_ed25519_work ~/.ssh/id_ed25519_personal
+   ```
+
+   Only remove a file once `ssh-add -L` shows its public half, otherwise the
+   host becomes unloggable-into.
+
+### 5.2 Host configuration
+
+`ssh` only asks the agent for a key named by an `IdentityFile`, and
+`IdentitiesOnly yes` is what stops it from offering every key the agent holds.
+Point `IdentityFile` at the **public** half and Bitwarden answers the request
+from the vault; point it at a private key file and `ssh` reads that file
+instead. `AddKeysToAgent` is unnecessary and unsupported — Bitwarden implements
+only list and sign.
 
 ```sshconfig
 Host *
     IdentityAgent ~/.bitwarden-ssh-agent.sock
+    IdentitiesOnly yes
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_work.pub
+
+Host github-personal
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_personal.pub
 ```
 
-Verify, then sign commits with the same key:
+Edit `ssh/.ssh/config` in the checkout, not `~/.ssh/config`.
+
+### 5.3 Sign commits with the same key
 
 ```bash
-ssh-add -L
-ssh -T git@github-personal
+git config --global gpg.format ssh
+git config --global commit.gpgsign true
+git config --global user.signingkey "$(ssh-add -L | grep personal | head -1)"
 ```
 
-```gitconfig
-[gpg]
-    format = ssh
-[commit]
-    gpgsign = true
-[user]
-    signingkey = ssh-ed25519 AAAA...
-```
+`user.signingkey` must be a full `ssh-ed25519 AAAA...` line. Git asks the agent
+to sign, so the vault must be unlocked and the app running when you commit.
 
 ## 6. Kanata
 
@@ -114,6 +178,7 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `mise`       | `~/.config/mise.toml`, `~/.config/mise.lock` |
 | `nvim`       | `~/.config/nvim`                 |
 | `sketchybar` | `~/.config/sketchybar`           |
+| `ssh`        | `~/.ssh/config`, `~/.ssh/known_hosts` |
 | `starship`   | `~/.config/starship.toml`        |
 | `wezterm`    | `~/.config/wezterm`              |
 | `zsh`        | `~/.zshrc`, `~/.zshenv`          |

@@ -69,6 +69,8 @@ lockfile = true
 "~/.config/mise.lock" = "~/dotfiles/mise/.config/mise.lock"
 "~/.config/nvim" = "~/dotfiles/nvim/.config/nvim"
 "~/.config/sketchybar" = "~/dotfiles/sketchybar/.config/sketchybar"
+"~/.ssh/config" = "~/dotfiles/ssh/.ssh/config"
+"~/.ssh/known_hosts" = "~/dotfiles/ssh/.ssh/known_hosts"
 "~/.config/starship.toml" = "~/dotfiles/starship/.config/starship.toml"
 "~/.config/wezterm" = "~/dotfiles/wezterm/.config/wezterm"
 "~/.zshrc" = "~/dotfiles/zsh/.zshrc"
@@ -212,6 +214,12 @@ fi
 # Disable guest login
 if [ "$(sudo /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow GuestEnabled 2>/dev/null || echo 1)" != "0" ]; then
   sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
+fi
+
+# SSH directory. The dotfiles phase above links ~/.ssh/{config,known_hosts} into
+# the checkout, but nothing sets the 0700 the directory itself needs.
+if [ -d "$HOME/.ssh" ]; then
+  chmod 700 "$HOME/.ssh"
 fi
 
 # Reload apps that cache preferences

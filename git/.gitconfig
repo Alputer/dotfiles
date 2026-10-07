@@ -1,6 +1,11 @@
 [user]
 	name = Alp Tuna
 	email = alp.tuna.453@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMDWs/3fJ6SZ+BZ7exI8HvftzFunyVcB7EH3HhwRXWAS
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
 [core]
 	editor = nvim
 [init]

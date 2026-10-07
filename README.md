@@ -145,16 +145,22 @@ Host github-personal
 
 Edit `ssh/.ssh/config` in the checkout, not `~/.ssh/config`.
 
-### 5.3 Sign commits with the same key
+### 5.3 Commit signing
+
+Already configured in `git/.gitconfig`: `gpg.format = ssh`,
+`commit.gpgsign = true`, and `user.signingkey` pinned to the public half of the
+personal key. Git signs through the same agent, so the vault must be unlocked
+and the app running when you commit — otherwise the commit fails.
+
+Verify on a new repo:
 
 ```bash
-git config --global gpg.format ssh
-git config --global commit.gpgsign true
-git config --global user.signingkey "$(ssh-add -L | grep personal | head -1)"
+git commit --allow-empty -m test && git cat-file commit HEAD | head -3
 ```
 
-`user.signingkey` must be a full `ssh-ed25519 AAAA...` line. Git asks the agent
-to sign, so the vault must be unlocked and the app running when you commit.
+A `gpgsig` block means it signed. `git log --show-signature` additionally wants
+a `gpg.ssh.allowedSignersFile` to verify against; that is only needed when you
+want git to check signatures, not when you want them written.
 
 ## 6. Kanata
 

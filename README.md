@@ -1,7 +1,7 @@
 # Dotfiles
 
 Fresh-machine macOS setup: dotfile symlinks, Homebrew packages, and CLI/language
-tool versions, all declared in `mise/.config/mise.toml`.
+tool versions, all declared in `mise/mise.toml`.
 
 The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 
@@ -63,10 +63,10 @@ sudo xcodebuild -license accept
 Enable **SSH agent** in the Bitwarden desktop app under *Settings → Enable SSH agent*.
 `zsh/.zshenv` points SSH tools at Bitwarden's agent socket, and `git/.gitconfig`
 uses that agent to sign commits with SSH. SSH host settings are in
-`ssh/.ssh/config`; its `IdentityAgent` setting selects the Bitwarden socket. (This
+`ssh/config`; its `IdentityAgent` setting selects the Bitwarden socket. (This
 actually overrides `SSH_AUTH_SOCK` variable.)
 Private and public key pairs are stored in Bitwarden. Copies of the public keys
-also live in `ssh/.ssh` as `IdentityFile` selectors, so each host can use its
+also live in `ssh` as `IdentityFile` selectors, so each host can use its
 matching key while the private keys remain in Bitwarden. Unfortunately, Bitwarden
 doesn't have a host-based key selector.
 
@@ -134,26 +134,17 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 
 ## Adding a new dotfile
 
-Move the live config into its package directory, then add the entry:
+Keep each app's files directly in its package directory. For example, store
+`~/.config/foo/config.toml` as `foo/config.toml`, then add this entry to
+`mise/mise.toml`:
 
-```bash
-mv ~/.config/foo/config.toml ~/dotfiles/foo/.config/foo/config.toml
-mise dot add -p ~/dotfiles/mise/.config/mise.toml \
-  --source ~/dotfiles/foo/.config/foo/config.toml \
-  ~/.config/foo/config.toml
+```toml
+[dotfiles]
+"~/.config/foo/config.toml" = { source = "~/dotfiles/foo/config.toml", mode = "symlink" }
 ```
 
-This writes `"~/.config/foo/config.toml" = "~/dotfiles/foo/.config/foo/config.toml"`
-into `[dotfiles]` and links the target. Preview with `--dry-run`.
-
-Both flags are required here:
-
-- `-p` — the config is `mise/.config/mise.toml`, symlinked from
-  `~/.config/mise.toml`. Without it mise writes to `~/.config/mise/config.toml`,
-  a second file that is not tracked.
-- `--source` — without it mise seeds the source at the repo root
-  (`~/dotfiles/.config/foo/config.toml`) instead of the package directory that
-  every other entry uses.
+The key declares the target location, and the source declares the checkout file
+that it links to. Apply the link with `mise dot apply`.
 
 Check what is linked, or diff pending changes:
 
@@ -201,7 +192,7 @@ Preview any of the package commands with `--dry-run` first, and append
 packages declared in `[bootstrap.packages]`; anything else in the Cellar is left
 alone.
 
-To adopt a newer version deliberately, bump it in `mise/.config/mise.toml`
+To adopt a newer version deliberately, bump it in `mise/mise.toml`
 (`mise use <tool>@<version>` does this for you) and commit the refreshed
 `mise.lock` alongside it.
 

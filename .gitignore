@@ -1,10 +1,10 @@
 
 # SSH keys stay out of this repo (private halves live in Bitwarden).
 # config and known_hosts are tracked.
-/ssh/.ssh/*
-!/ssh/.ssh/config
-!/ssh/.ssh/known_hosts
-!/ssh/.ssh/*.pub
+/ssh/*
+!/ssh/config
+!/ssh/known_hosts
+!/ssh/*.pub
 
 # Track only zsh config, not artifacts
 zsh/*

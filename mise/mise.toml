@@ -55,24 +55,23 @@ mas = "7.0.0"
 CLOUDSDK_PYTHON = { value = "{{ tools.python.path }}/bin/python", tools = true }
 
 [settings]
-dotfiles.root = "~/dotfiles"
 dotfiles.relative_symlinks = true
 lockfile = true
 
 [dotfiles]
-"~/.config/aerospace" = "~/dotfiles/aerospace/.config/aerospace"
-"~/.config/borders" = "~/dotfiles/borders/.config/borders"
-"~/.gitconfig" = "~/dotfiles/git/.gitconfig"
-"~/.config/kanata" = "~/dotfiles/kanata/.config/kanata"
-"~/.config/mise.toml" = "~/dotfiles/mise/.config/mise.toml"
-"~/.config/mise.lock" = "~/dotfiles/mise/.config/mise.lock"
-"~/.config/nvim" = "~/dotfiles/nvim/.config/nvim"
-"~/.config/sketchybar" = "~/dotfiles/sketchybar/.config/sketchybar"
-"~/.ssh" = "~/dotfiles/ssh/.ssh"
-"~/.config/starship.toml" = "~/dotfiles/starship/.config/starship.toml"
-"~/.config/wezterm" = "~/dotfiles/wezterm/.config/wezterm"
-"~/.zshrc" = "~/dotfiles/zsh/.zshrc"
-"~/.zshenv" = "~/dotfiles/zsh/.zshenv"
+"~/.config/aerospace" = { source = "~/dotfiles/aerospace", mode = "symlink" }
+"~/.config/borders" = { source = "~/dotfiles/borders", mode = "symlink" }
+"~/.gitconfig" = { source = "~/dotfiles/git/.gitconfig", mode = "symlink" }
+"~/.config/kanata" = { source = "~/dotfiles/kanata", mode = "symlink" }
+"~/.config/mise.toml" = { source = "~/dotfiles/mise/mise.toml", mode = "symlink" }
+"~/.config/mise.lock" = { source = "~/dotfiles/mise/mise.lock", mode = "symlink" }
+"~/.config/nvim" = { source = "~/dotfiles/nvim", mode = "symlink" }
+"~/.config/sketchybar" = { source = "~/dotfiles/sketchybar", mode = "symlink" }
+"~/.ssh" = { source = "~/dotfiles/ssh", mode = "symlink" }
+"~/.config/starship.toml" = { source = "~/dotfiles/starship/starship.toml", mode = "symlink" }
+"~/.config/wezterm" = { source = "~/dotfiles/wezterm", mode = "symlink" }
+"~/.zshrc" = { source = "~/dotfiles/zsh/.zshrc", mode = "symlink" }
+"~/.zshenv" = { source = "~/dotfiles/zsh/.zshenv", mode = "symlink" }
 
 
 # Third-party Homebrew taps.

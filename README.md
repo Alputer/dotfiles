@@ -58,6 +58,13 @@ mas install 497799835         # Xcode
 sudo xcodebuild -license accept
 ```
 
+Dynamic Wallpaper Library is installed the same way, after the Xcode commands.
+It is not set up automatically; pick wallpapers in the app.
+
+```bash
+mas install 1582358382        # Dynamic Wallpaper Library
+```
+
 ## 5. SSH with Bitwarden
 
 Enable **SSH agent** in the Bitwarden desktop app under *Settings → Enable SSH agent*.
@@ -172,6 +179,21 @@ installed. It is idempotent, so running it on an unchanged config does nothing.
 Preview first with `mise bootstrap --dry-run`, or scope it to one phase:
 `mise dot apply` for links only, `mise install` for tools only.
 
+Inspect state and scope a run:
+
+```bash
+mise bootstrap --dry-run                    # preview every phase
+mise bootstrap plan                         # changes declarative resources would make
+mise bootstrap status --missing             # what is not in place yet
+mise bootstrap --only tools                 # run one phase (see phase names in --help)
+mise bootstrap --skip tools,task            # run everything except these phases
+mise bootstrap packages status              # managed formulae and casks
+mise bootstrap macos defaults status        # macOS preferences
+mise bootstrap user apply --dry-run         # login shell
+```
+
+`--only` and `--skip` cannot be combined.
+
 Once `origin` uses an SSH host alias rather than `github.com` (step 6), use `mise
 bootstrap` — not `--from`, which requires the origin to match the requested URL.
 
@@ -182,15 +204,14 @@ tool versions and pins them in `mise.lock`, while Homebrew formulae and casks
 are re-poured from their current bottles.
 
 ```bash
-mise lock --bump && mise install --locked           # refresh mise.lock, then commit it
+mise upgrade                                        # install them and update mise.lock OR use the following commands.
+mise lock --bump && mise install --locked           # This is a more CI friendly approach for updating lockfile. refresh mise.lock, then commit it
 mise bootstrap packages upgrade --manager brew      # formulae
 mise bootstrap packages upgrade --manager brew-cask # casks
 ```
 
-Preview any of the package commands with `--dry-run` first, and append
-`--manager` to target one manager. `mise bootstrap packages upgrade` only touches
-packages declared in `[bootstrap.packages]`; anything else in the Cellar is left
-alone.
+`mise upgrade` is a simpler alternative for tools. It installs newer versions
+within the ranges in `mise.toml` and updates `mise.lock` in the same step:
 
 To adopt a newer version deliberately, bump it in `mise/mise.toml`
 (`mise use <tool>@<version>` does this for you) and commit the refreshed

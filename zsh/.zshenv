@@ -14,8 +14,5 @@ export PATH="$HOME/.local/bin:$PATH"
 # Homebrew prefix (populated by `mise bootstrap packages`)
 export PATH="/opt/homebrew/bin:$PATH"
 
-# Bitwarden SSH agent (.dmg build); falls back to the system agent if absent
-if [[ -S "$HOME/.bitwarden-ssh-agent.sock" ]]; then
-  export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
-fi
-
+# Bitwarden SSH agent (.dmg build). Keep SSH and Git off the native agent.
+export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"

@@ -14,3 +14,5 @@
 	rebase = true
 [push]
 	autoSetupRemote = true
+[url "git@github-work:hubxco/"]
+	insteadOf = git@github.com:hubxco/

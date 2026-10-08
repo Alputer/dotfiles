@@ -93,7 +93,7 @@ ssh -vT git@github-personal # greets you by username, exit code 1 on success
 Then clone:
 
 ```bash
-rm -rf ~/dotfiles && git clone git@github-personal:Alputer/dotfiles.git ~/dotfiles
+rm -rf ~/dotfiles && git clone git@github.com:Alputer/dotfiles.git ~/dotfiles
 ```
 
 Re-link the symlinks into the new checkout (`rm -rf` left them dangling):

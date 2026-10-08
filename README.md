@@ -63,7 +63,20 @@ sudo xcodebuild -license accept
 Enable **SSH agent** in the Bitwarden desktop app under *Settings → Enable SSH agent*.
 `zsh/.zshenv` points SSH tools at Bitwarden's agent socket, and `git/.gitconfig`
 uses that agent to sign commits with SSH. SSH host settings are in
-`ssh/.ssh/config`. `IdentityAgent` setting in ssh config overrides `SSH_AUTH_SOCK`
+`ssh/.ssh/config`; its `IdentityAgent` setting selects the Bitwarden socket. (This
+actually overrides `SSH_AUTH_SOCK` variable.)
+Private and public key pairs are stored in Bitwarden. Copies of the public keys
+also live in `ssh/.ssh` as `IdentityFile` selectors, so each host can use its
+matching key while the private keys remain in Bitwarden. Unfortunately, Bitwarden
+doesn't have a host-based key selector.
+
+### Checking SSH connections
+
+Run the checks for Bitbucket, work GitHub, and personal GitHub:
+
+```bash
+ssh -T git@bitbucket.org; ssh -T git@github-work; ssh -T git@github.com
+```
 
 ## 6. Switch the checkout to SSH
 

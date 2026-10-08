@@ -4,8 +4,7 @@
 /ssh/.ssh/*
 !/ssh/.ssh/config
 !/ssh/.ssh/known_hosts
-/ssh/.ssh/*.pub
-/ssh/.ssh/id_*
+!/ssh/.ssh/*.pub
 
 # Track only zsh config, not artifacts
 zsh/*

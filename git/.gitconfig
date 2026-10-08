@@ -1,7 +1,7 @@
 [user]
 	name = Alp Tuna
 	email = alp.tuna.453@gmail.com
-	signingkey = ~/.ssh/github-personal.pub
+	signingkey = ~/.ssh/github-personal-signkey.pub
 [commit]
 	gpgsign = true
 [gpg]

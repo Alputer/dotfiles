@@ -1,0 +1,5 @@
+# Set the identity for repositories under ~/code/hubx here.
+[user]
+name = Alp Tuna
+email = alp.tuna@hubx.co
+signingkey = ~/.ssh/github-hubx-signkey.pub

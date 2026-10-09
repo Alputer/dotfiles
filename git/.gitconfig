@@ -16,3 +16,5 @@
 	autoSetupRemote = true
 [url "git@github-work:hubxco/"]
 	insteadOf = git@github.com:hubxco/
+[includeIf "gitdir:~/code/hubx/"]
+	path = ~/dotfiles/git/work.gitconfig

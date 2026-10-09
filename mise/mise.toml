@@ -135,7 +135,6 @@ autohide = true
 tilesize = 96
 show_recents = false
 apps = [
-  "/System/Library/CoreServices/Finder.app",
   "/Applications/Brave Browser.app",
   "/Applications/Slack.app",
   "/Applications/Notion.app",
@@ -151,12 +150,14 @@ apps = [
 show_all_files = true
 
 [bootstrap.macos.keyboard]
+automatic_spelling_correction = false
 press_and_hold = false # ApplePressAndHoldEnabled = false
 key_repeat = 5
 initial_key_repeat = 25
 
 [bootstrap.macos.trackpad]
 tap_to_click = true # trackpad.Clicking = true
+three_finger_drag = true
 
 # Preferences without a friendly key use the raw `defaults` domains.
 [bootstrap.macos.defaults.NSGlobalDomain]
@@ -182,6 +183,8 @@ mode = "0644"
 [tasks.bootstrap]
 run = """
 set -e
+
+# The macOS account short name is not managed here.
 
 # Host name
 if [ "$(/usr/sbin/scutil --get HostName 2>/dev/null || true)" != "alputer" ]; then

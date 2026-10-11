@@ -13,3 +13,8 @@ zsh/*
 
 # Neovim artifact?
 .local
+
+# fnox: age identities are private keys; local overrides hold personal sync caches
+age*.txt
+fnox.local.toml
+.fnox.local.toml

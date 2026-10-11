@@ -7,6 +7,9 @@ setopt sharehistory # Allows all running Zsh sessions to share command history i
 # mise
 eval "$(mise activate zsh)"
 
+# fnox
+eval "$(fnox activate zsh)"
+
 # starship
 eval "$(starship init zsh)"
 

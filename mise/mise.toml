@@ -24,6 +24,7 @@ docker-cli = "latest"
 
 # Development tools
 act = "latest"
+age = "latest"
 buck2 = "latest"
 codex = "latest"
 fnox = "latest"
@@ -62,6 +63,7 @@ lockfile = true
 [dotfiles]
 "~/.config/aerospace" = { source = "~/dotfiles/aerospace", mode = "symlink" }
 "~/.config/borders" = { source = "~/dotfiles/borders", mode = "symlink" }
+"~/.config/fnox/config.toml" = { source = "~/dotfiles/fnox/config.toml", mode = "symlink" }
 "~/.gitconfig" = { source = "~/dotfiles/git/.gitconfig", mode = "symlink" }
 "~/.config/kanata" = { source = "~/dotfiles/kanata", mode = "symlink" }
 "~/.config/mise.toml" = { source = "~/dotfiles/mise/mise.toml", mode = "symlink" }
@@ -98,6 +100,7 @@ lockfile = true
 "brew:FelixKratz/formulae/borders" = "latest"
 "brew:FelixKratz/formulae/sketchybar" = "latest"
 "brew:kanata" = "latest"
+"brew:age-plugin-se" = "latest"
 "brew:zsh-autosuggestions" = "latest"
 "brew:zsh-history-substring-search" = "latest"
 "brew:zsh-syntax-highlighting" = "latest"

@@ -1,0 +1,14 @@
+#:schema https://fnox.jdx.dev/schema.json
+
+if_missing = "warn"
+env = "exec" # Load env vars only if executed with fnox exec -- <command>
+
+default_provider = "bitwarden"
+
+[providers.bitwarden]
+type = "bitwarden"
+
+[providers.sync-age]
+type = "age"
+recipients = ["age1se1qwsdfdc3pn2398vm0pm479tlajweutp23ylmwu69ls9kd4hakxqdunpu5ma"] # Public key
+key_file = "~/.config/fnox/age-se.txt" # Private key

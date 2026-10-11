@@ -125,8 +125,9 @@ lockfile = true
 "brew-cask:whatsapp" = "latest"
 "brew-cask:zoom" = "latest"
 
-# Xcode is installed manually in README step 4: `mas` is a mise tool now, so it
-# is not on PATH while the packages phase runs.
+# Mac App Store apps. `mas` comes from [tools], so the first run skips these.
+"mas:497799835" = "latest" # Xcode
+"mas:1582358382" = "latest" # Dynamic Wallpaper Library
 
 # Login shell for this user.
 [bootstrap.user]
@@ -173,30 +174,3 @@ AppleShowAllExtensions = true
 [bootstrap.macos.defaults."com.apple.finder"]
 FXDefaultSearchScope = "SCcf"
 "_FXShowPosixPathInTitle" = true
-
-# System-level settings mise cannot express declaratively. Guarded so repeated
-# runs do not ask for sudo again once the machine is converged.
-[tasks.bootstrap]
-run = """
-set -e
-
-# The macOS account short name is not managed here.
-
-# Host name
-if [ "$(/usr/sbin/scutil --get HostName 2>/dev/null || true)" != "alputer" ]; then
-  sudo /usr/sbin/scutil --set ComputerName alputer
-  sudo /usr/sbin/scutil --set LocalHostName alputer
-  sudo /usr/sbin/scutil --set HostName alputer
-fi
-
-# Time zone
-if [ "$(sudo /usr/sbin/systemsetup -gettimezone 2>/dev/null | awk '{print $NF}')" != "Europe/Istanbul" ]; then
-  sudo /usr/sbin/systemsetup -settimezone Europe/Istanbul
-fi
-
-# Disable guest login
-if [ "$(sudo /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow GuestEnabled 2>/dev/null || echo 1)" != "0" ]; then
-  sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
-fi
-
-"""

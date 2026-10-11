@@ -48,22 +48,18 @@ system-level steps.
 
 ## 4. Xcode
 
-Installed manually because `mas` is a mise tool, so it is not on `PATH` during
-the bootstrap packages phase.
+Xcode and Dynamic Wallpaper Library are declared in `[bootstrap.packages]`. The
+first `mise bootstrap` skips them because `mas` comes from `[tools]`, which
+installs later in the run. Sign in to the App Store, then apply them:
 
 ```bash
 eval "$(mise activate zsh)"
 mas account                   # sign in to the App Store
-mas install 497799835         # Xcode
+mise bootstrap packages apply --manager mas
 sudo xcodebuild -license accept
 ```
 
-Dynamic Wallpaper Library is installed the same way, after the Xcode commands.
-It is not set up automatically; pick wallpapers in the app.
-
-```bash
-mas install 1582358382        # Dynamic Wallpaper Library
-```
+Dynamic Wallpaper Library is not set up automatically; pick wallpapers in the app.
 
 ## 5. SSH with Bitwarden
 

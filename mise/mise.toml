@@ -111,7 +111,6 @@ lockfile = true
 "brew-cask:nikitabobko/tap/aerospace" = "latest"
 "brew-cask:bitwarden" = "latest"
 "brew-cask:brave-browser" = "latest"
-"brew-cask:cursor" = "latest"
 "brew-cask:docker-desktop" = "latest"
 "brew-cask:figma" = "latest"
 "brew-cask:notion" = "latest"
@@ -174,13 +173,6 @@ AppleShowAllExtensions = true
 [bootstrap.macos.defaults."com.apple.finder"]
 FXDefaultSearchScope = "SCcf"
 "_FXShowPosixPathInTitle" = true
-
-# Touch ID for sudo (security.pam.services.sudo_local.touchIdAuth).
-[bootstrap.files."/etc/pam.d/sudo_local"]
-content = "auth       sufficient     pam_tid.so\n"
-owner = "root"
-group = "wheel"
-mode = "0644"
 
 # System-level settings mise cannot express declaratively. Guarded so repeated
 # runs do not ask for sudo again once the machine is converged.

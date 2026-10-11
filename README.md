@@ -38,8 +38,8 @@ mise bootstrap --from https://github.com/Alputer/dotfiles.git --from-dir ~/dotfi
 
 Clones the repo and applies everything: links dotfiles (including `~/.ssh/config`
 and `~/.ssh/known_hosts`), installs packages and casks, writes macOS preferences,
-installs Touch ID for `sudo`, runs the `bootstrap` task, then installs `[tools]`.
-Prompts for `sudo` on the system-level steps.
+, runs the `bootstrap` task, then installs `[tools]`. Prompts for `sudo` on the
+system-level steps.
 
 - `--from-dir` places the checkout at `~/dotfiles`, where `[dotfiles]` expects it.
 - Use the HTTPS URL; a fresh machine has no SSH keys yet (step 5).

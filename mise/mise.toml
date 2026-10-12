@@ -125,10 +125,6 @@ lockfile = true
 "brew-cask:whatsapp" = "latest"
 "brew-cask:zoom" = "latest"
 
-# Mac App Store apps. `mas` comes from Homebrew, so the first run skips these.
-"mas:497799835" = "latest" # Xcode
-"mas:1582358382" = "latest" # Dynamic Wallpaper Library
-
 # Login shell for this user.
 [bootstrap.user]
 login_shell = "/bin/zsh"

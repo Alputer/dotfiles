@@ -18,7 +18,6 @@ Homebrew is not required: `mise bootstrap` pours formulae and casks directly.
 curl https://mise.run | sh
 export PATH="$HOME/.local/bin:$PATH"   # for this shell
 curl -fsSL https://opencode.ai/v2/install | bash # opencode v2 is not in registries of mise/brew
-mise use mas # Log in to apple account on macbook and appstore
 # Install Xcode manually, Xcode is necessary for system tools. e.g git comes with xcode.
 # We can also install these tools with `xcode-select --install` command but need to install Xcode anyways.
 ```

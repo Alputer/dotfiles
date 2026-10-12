@@ -51,6 +51,7 @@ zoxide = "latest"
 # Container runtimes and the Mac App Store CLI
 colima = "latest"
 container = "latest"
+mas = "latest"
 
 [env]
 CLOUDSDK_PYTHON = { value = "{{ tools.python.path }}/bin/python", tools = true }
@@ -99,7 +100,6 @@ lockfile = true
 "brew:FelixKratz/formulae/borders" = "latest"
 "brew:FelixKratz/formulae/sketchybar" = "latest"
 "brew:kanata" = "latest"
-"brew:mas" = "latest"
 "brew:age-plugin-se" = "latest"
 "brew:zsh-autosuggestions" = "latest"
 "brew:zsh-history-substring-search" = "latest"

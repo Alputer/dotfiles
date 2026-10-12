@@ -12,25 +12,19 @@ The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 
 Homebrew is not required: `mise bootstrap` pours formulae and casks directly.
 
-## 1. Command Line Tools
-
-```bash
-xcode-select --install
-```
-
-Provides `git` and the compiler tools mise needs. Full Xcode comes in step 4.
-
-## 2. mise and opencode
+## 1. mise, mas, Xcode and App Store apps
 
 ```bash
 curl https://mise.run | sh
 export PATH="$HOME/.local/bin:$PATH"   # for this shell
 curl -fsSL https://opencode.ai/v2/install | bash # opencode v2 is not in registries of mise/brew
+mise use mas # Log in to apple account on macbook and appstore
+mise bootstrap packages apply --manager mas # Xcode is necessary for system tools.
 ```
 
 Installs to `~/.local/bin`, which `zsh/.zshenv` already puts on `PATH`.
 
-## 3. Bootstrap
+## 2. Bootstrap
 
 ```bash
 mise bootstrap --from https://github.com/Alputer/dotfiles.git --from-dir ~/dotfiles/mise
@@ -42,26 +36,11 @@ and `~/.ssh/known_hosts`), installs packages and casks, writes macOS preferences
 system-level steps.
 
 - `--from-dir` places the checkout at `~/dotfiles`, where `[dotfiles]` expects it.
-- Use the HTTPS URL; a fresh machine has no SSH keys yet (step 5).
+- Use the HTTPS URL; a fresh machine has no SSH keys yet (step 3).
 - Add `--dry-run` to preview, `--yes` to run unattended.
 - A real file where a link belongs is refused; use `--force-dotfiles` to replace it.
 
-## 4. Xcode
-
-Xcode and Dynamic Wallpaper Library are declared in `[bootstrap.packages]`. The
-first `mise bootstrap` skips them because `mas` comes from `[tools]`, which
-installs later in the run. Sign in to the App Store, then apply them:
-
-```bash
-eval "$(mise activate zsh)"
-mas account                   # sign in to the App Store
-mise bootstrap packages apply --manager mas
-sudo xcodebuild -license accept
-```
-
-Dynamic Wallpaper Library is not set up automatically; pick wallpapers in the app.
-
-## 5. SSH with Bitwarden
+## 3. SSH with Bitwarden
 
 Enable **SSH agent** in the Bitwarden desktop app under *Settings → Enable SSH agent*.
 `zsh/.zshenv` points SSH tools at Bitwarden's agent socket, and `git/.gitconfig`
@@ -81,10 +60,10 @@ Run the checks for Bitbucket, work GitHub, and personal GitHub:
 ssh -T git@bitbucket.org; ssh -T git@github-work; ssh -T git@github.com
 ```
 
-## 6. Switch the checkout to SSH
+## 4. Switch the checkout to SSH
 
-Step 3 cloned over HTTPS because a fresh machine has no SSH keys yet. Now that
-the agent is verified (step 5), replace the checkout with an SSH clone so `push`
+Step 2 cloned over HTTPS because a fresh machine has no SSH keys yet. Now that
+the agent is verified (step 3), replace the checkout with an SSH clone so `push`
 and `pull` use the agent and no credentials are stored on disk.
 
 ```bash
@@ -108,7 +87,7 @@ mise bootstrap
 After this, use `mise bootstrap` — not `--from` — for future runs, since `--from`
 requires `origin` to match the requested URL.
 
-## 7. Kanata
+## 5. Kanata
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 
@@ -190,7 +169,7 @@ mise bootstrap user apply --dry-run         # login shell
 
 `--only` and `--skip` cannot be combined.
 
-Once `origin` uses an SSH host alias rather than `github.com` (step 6), use `mise
+Once `origin` uses an SSH host alias rather than `github.com` (step 4), use `mise
 bootstrap` — not `--from`, which requires the origin to match the requested URL.
 
 ## Updating tools and packages

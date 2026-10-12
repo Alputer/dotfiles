@@ -1552,29 +1552,6 @@ url = "https://www.lua.org/ftp/lua-5.5.1.tar.gz"
 [tools.lua."platforms.windows-x64-baseline"]
 url = "https://www.lua.org/ftp/lua-5.5.1.tar.gz"
 
-[[tools.mas]]
-version = "7.0.0"
-backend = "aqua:mas-cli/mas"
-specifiers = [
-    "7.0.0",
-    "latest",
-]
-
-[tools.mas."platforms.macos-arm64"]
-checksum = "sha256:bc218a854c85d9e1c95496a96b26287bb66056b95688b90f91d04fa62ed21b75"
-url = "https://github.com/mas-cli/mas/releases/download/v7.0.0/mas-7.0.0-arm64.pkg"
-url_api = "https://api.github.com/repos/mas-cli/mas/releases/assets/411752346"
-
-[tools.mas."platforms.macos-x64"]
-checksum = "sha256:9bca1de1fb6ea19c9e0b9d7b7c85249020c9ed65a9d434c2ef40896a2f3395f9"
-url = "https://github.com/mas-cli/mas/releases/download/v7.0.0/mas-7.0.0-x86_64.pkg"
-url_api = "https://api.github.com/repos/mas-cli/mas/releases/assets/411752348"
-
-[tools.mas."platforms.macos-x64-baseline"]
-checksum = "sha256:9bca1de1fb6ea19c9e0b9d7b7c85249020c9ed65a9d434c2ef40896a2f3395f9"
-url = "https://github.com/mas-cli/mas/releases/download/v7.0.0/mas-7.0.0-x86_64.pkg"
-url_api = "https://api.github.com/repos/mas-cli/mas/releases/assets/411752348"
-
 [[tools.neovim]]
 version = "0.12.6"
 backend = "vfox:mise-plugins/vfox-neovim"
@@ -1850,7 +1827,7 @@ checksum = "sha256:911ace20f90d068ca0e4dda6d0e4f0f81e52e52f2dd4f4004c721e253412e
 url = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.7.tar.gz"
 
 [[tools.rust]]
-version = "1.99.0"
+version = "1.97.1"
 backend = "core:rust"
 specifiers = ["latest"]
 

@@ -9,7 +9,6 @@ The previous Nix/nix-darwin configuration is preserved under `archive/nix/`.
 
 - macOS (Apple Silicon)
 - Terminal with network access
-- A GitHub account (SSH keys are stored in Bitwarden; see step 5)
 
 Homebrew is not required: `mise bootstrap` pours formulae and casks directly.
 
@@ -21,11 +20,12 @@ xcode-select --install
 
 Provides `git` and the compiler tools mise needs. Full Xcode comes in step 4.
 
-## 2. mise
+## 2. mise and opencode
 
 ```bash
 curl https://mise.run | sh
 export PATH="$HOME/.local/bin:$PATH"   # for this shell
+curl -fsSL https://opencode.ai/v2/install | bash # opencode v2 is not in registries of mise/brew
 ```
 
 Installs to `~/.local/bin`, which `zsh/.zshenv` already puts on `PATH`.
@@ -33,7 +33,7 @@ Installs to `~/.local/bin`, which `zsh/.zshenv` already puts on `PATH`.
 ## 3. Bootstrap
 
 ```bash
-mise bootstrap --from https://github.com/Alputer/dotfiles.git --from-dir ~/dotfiles
+mise bootstrap --from https://github.com/Alputer/dotfiles.git --from-dir ~/dotfiles/mise
 ```
 
 Clones the repo and applies everything: links dotfiles (including `~/.ssh/config`

@@ -87,7 +87,33 @@ mise bootstrap
 After this, use `mise bootstrap` — not `--from` — for future runs, since `--from`
 requires `origin` to match the requested URL.
 
-## 5. Kanata
+## 5. Configure fnox's secure age key
+
+Generate a Secure Enclave age key protected by any available biometric method:
+
+```bash
+age-plugin-se keygen --access-control=any-biometry -o ~/.config/fnox/age-se.txt
+```
+
+In `~/.config/fnox/config.toml` (the linked `fnox/config.toml` in this repo),
+set the `sync-age` provider to the public recipient printed by `keygen` and the
+private key file you just created:
+
+```toml
+[providers.sync-age]
+type = "age"
+recipients = ["age1se1..."] # Replace with the public recipient from keygen
+key_file = "~/.config/fnox/age-se.txt"
+```
+
+Unlock Bitwarden and sync the local secrets file with this provider:
+
+```bash
+export BW_SESSION="$(bw unlock --raw)"
+fnox sync --provider sync-age --local-file --force
+```
+
+## 6. Kanata
 
 See [Setting Up Kanata with Karabiner-DriverKit-VirtualHIDDevice on macOS](https://dev.to/the_lazy_/setting-up-kanata-with-karabiner-driverkit-virtualhiddevice-on-macos-1o47).
 

@@ -25,6 +25,7 @@ move_app_to_workspace() {
 move_app_to_workspace "Brave Browser" "com.brave.Browser" "1"
 move_app_to_workspace "Slack" "com.tinyspeck.slackmacgap" "2"
 move_app_to_workspace "Notion" "notion.id" "3"
-move_app_to_workspace "Visual Studio Code" "com.microsoft.VSCode" "4"
+move_app_to_workspace "Shottr" "cc.ffitch.shottr" "4"
+move_app_to_workspace "Maccy" "org.p0deje.Maccy" "4"
 move_app_to_workspace "Bitwarden" "com.bitwarden.desktop" "4"
 move_app_to_workspace "WezTerm" "com.github.wez.wezterm" "5"

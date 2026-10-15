@@ -1,8 +1,10 @@
 export HISTFILE="$HOME/.zsh_history"    # History filepath
-export HISTSIZE=10000                   # Maximum events for internal history
-export SAVEHIST=10000                   # Maximum events in history file
-setopt appendhistory # Makes Zsh append new commands to the history file instead of overwriting it when the shell exits.
-setopt sharehistory # Allows all running Zsh sessions to share command history in real time.
+export HISTSIZE=90000                   # Maximum events for internal history
+export SAVEHIST=90000                   # Maximum events in history file
+setopt appendhistory                    # Makes Zsh append new commands to the history file instead of overwriting it when the shell exits.
+setopt sharehistory                     # Allows all running Zsh sessions to share command history in real time.
+
+bindkey -e # emacs mode
 
 # mise
 eval "$(mise activate zsh)"
@@ -12,6 +14,8 @@ eval "$(starship init zsh)"
 
 # zoxide
 eval "$(zoxide init zsh)"
+
+source <(fzf --zsh) # Ctrl-R + Ctrl-T + Alt-C
 
 # system info once per boot
 if [[ -o interactive ]]; then

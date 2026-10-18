@@ -113,6 +113,7 @@ lockfile = true
 "brew-cask:brave-browser" = "latest"
 "brew-cask:docker-desktop" = "latest"
 "brew-cask:figma" = "latest"
+"brew-cask:ghostty" = "latest"
 "brew-cask:maccy" = "latest"
 "brew-cask:notion" = "latest"
 "brew-cask:obsidian" = "latest"
@@ -139,7 +140,7 @@ apps = [
   "/Applications/Brave Browser.app",
   "/Applications/Slack.app",
   "/Applications/Notion.app",
-  "/Applications/WezTerm.app",
+  "/Applications/Ghostty.app",
   "/Applications/WhatsApp.app",
   "/Applications/Bitwarden.app",
   "/Applications/Tailscale.app",

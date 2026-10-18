@@ -29,9 +29,11 @@ buck2 = "latest"
 codex = "latest"
 fnox = "latest"
 gh = "latest"
+herdr = "latest"
 lazydocker = "latest"
 lazygit = "latest"
 neovim = "latest"
+pi = "latest"
 #opencode = "latest"
 stylua = "latest"
 starship = "latest"
@@ -64,6 +66,7 @@ lockfile = true
 "~/.config/aerospace" = { source = "~/dotfiles/aerospace", mode = "symlink" }
 "~/.config/borders" = { source = "~/dotfiles/borders", mode = "symlink" }
 "~/.config/fnox/config.toml" = { source = "~/dotfiles/fnox/config.toml", mode = "symlink" }
+"~/.config/ghostty" = { source = "~/dotfiles/ghostty", mode = "symlink" }
 "~/.gitconfig" = { source = "~/dotfiles/git/.gitconfig", mode = "symlink" }
 "~/.config/kanata" = { source = "~/dotfiles/kanata", mode = "symlink" }
 "~/.config/mise.toml" = { source = "~/dotfiles/mise/mise.toml", mode = "symlink" }

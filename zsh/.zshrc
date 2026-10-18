@@ -17,20 +17,21 @@ eval "$(zoxide init zsh)"
 
 source <(fzf --zsh) # Ctrl-R + Ctrl-T + Alt-C
 
-# system info once per boot
-if [[ -o interactive ]]; then
-  stamp_file="$XDG_CACHE_HOME/fastfetch-boot"
-  boot_time="$(sysctl -n kern.boottime | sed -E 's/.*sec = ([0-9]+).*/\1/')"
-  mkdir -p "$XDG_CACHE_HOME"
-  if [[ ! -f "$stamp_file" || "$(cat "$stamp_file")" != "$boot_time" ]]; then
-    echo "$boot_time" > "$stamp_file"
-    fastfetch
-  fi
-fi
-
 export PATH=/Users/alputer/.opencode/bin:$PATH
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# system info once per boot
+if [[ -o interactive ]] && (( $+commands[fastfetch] )); then
+  fastfetch_stamp="$HOME/.cache/fastfetch-boot"
+  boot_time=$(sysctl -n kern.boottime | sed -E 's/^\{ sec = ([0-9]+).*/\1/')
+  mkdir -p "$HOME/.cache"
+  if [[ ! -f $fastfetch_stamp || $(<$fastfetch_stamp) != $boot_time ]]; then
+    print -r -- "$boot_time" > "$fastfetch_stamp"
+    fastfetch
+  fi
+  unset fastfetch_stamp boot_time
+fi
 

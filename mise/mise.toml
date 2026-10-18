@@ -43,7 +43,6 @@ tree-sitter = "latest"
 bat = "latest"
 bitwarden = "latest"
 eza = "latest"
-fastfetch = "latest"
 fd = "latest"
 fzf = "latest"
 jq = "latest"
@@ -75,7 +74,6 @@ lockfile = true
 "~/.config/sketchybar" = { source = "~/dotfiles/sketchybar", mode = "symlink" }
 "~/.ssh" = { source = "~/dotfiles/ssh", mode = "symlink" }
 "~/.config/starship.toml" = { source = "~/dotfiles/starship/starship.toml", mode = "symlink" }
-"~/.config/wezterm" = { source = "~/dotfiles/wezterm", mode = "symlink" }
 "~/.zshrc" = { source = "~/dotfiles/zsh/.zshrc", mode = "symlink" }
 "~/.zshenv" = { source = "~/dotfiles/zsh/.zshenv", mode = "symlink" }
 
@@ -107,6 +105,7 @@ lockfile = true
 "brew:zsh-autosuggestions" = "latest"
 "brew:zsh-history-substring-search" = "latest"
 "brew:zsh-syntax-highlighting" = "latest"
+"brew:fastfetch" = "latest"
 
 # GUI applications.
 "brew-cask:font-jetbrains-mono-nerd-font" = "latest"
@@ -126,7 +125,6 @@ lockfile = true
 "brew-cask:slack" = "latest"
 "brew-cask:tailscale-app" = "latest"
 "brew-cask:visual-studio-code" = "latest"
-"brew-cask:wezterm" = "latest"
 "brew-cask:whatsapp" = "latest"
 "brew-cask:zoom" = "latest"
 

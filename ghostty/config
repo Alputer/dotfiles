@@ -1,0 +1,15 @@
+# Ghostty configuration. See https://ghostty.org/docs/config
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+font-family = IosevkaTerm Nerd Font Mono
+font-size = 18
+background-opacity = 0.85
+background-blur-radius = 6
+macos-titlebar-style = hidden
+window-padding-x = 14
+window-padding-y = 14
+
+quick-terminal-animation-duration = 0
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+shell-integration = zsh
+command = /bin/zsh -l

@@ -130,6 +130,7 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 |-------------|----------------------------------|
 | `aerospace`  | `~/.config/aerospace`            |
 | `borders`    | `~/.config/borders`              |
+| `ghostty`    | `~/.config/ghostty`              |
 | `git`        | `~/.gitconfig`                   |
 | `kanata`     | `~/.config/kanata`               |
 | `mise`       | `~/.config/mise.toml`, `~/.config/mise.lock` |
@@ -137,7 +138,6 @@ sudo launchctl kickstart -k system/com.kanata.daemon
 | `sketchybar` | `~/.config/sketchybar`           |
 | `ssh`        | `~/.ssh/config`, `~/.ssh/known_hosts` |
 | `starship`   | `~/.config/starship.toml`        |
-| `wezterm`    | `~/.config/wezterm`              |
 | `zsh`        | `~/.zshrc`, `~/.zshenv`          |
 
 ## Adding a new dotfile

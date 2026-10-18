@@ -9,7 +9,7 @@ move_app_to_workspace() {
   open -a "$app"
 
   local wid=""
-  for _ in $(seq 1 40); do
+  for _ in $(seq 1 60); do
     wid=$(aerospace list-windows --monitor all --app-bundle-id "$bundle_id" --format '%{window-id}' 2>/dev/null | head -n1)
     if [[ -n "$wid" ]]; then
       while IFS= read -r window_id; do

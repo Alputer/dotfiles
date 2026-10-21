@@ -1,5 +1,5 @@
 # Ghostty configuration. See https://ghostty.org/docs/config
-theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+theme = Atom One Dark
 font-family = IosevkaTerm Nerd Font Mono
 font-size = 18
 background-opacity = 0.85

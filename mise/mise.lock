@@ -2250,6 +2250,77 @@ url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.27.1/tree
 url_api = "https://api.github.com/repos/tree-sitter/tree-sitter/releases/assets/622546839"
 provenance = "github-attestations"
 
+[[tools.yt-dlp]]
+version = "2026.10.21"
+backend = "github:yt-dlp/yt-dlp"
+specifiers = ["latest"]
+
+[tools.yt-dlp."platforms.linux-arm64"]
+checksum = "sha256:d98a0aeb26b670aac94ee892a03a196f3f2cf0a81c3872186199c0c67ab36bde"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_linux_aarch64.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896154"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.linux-arm64-musl"]
+checksum = "sha256:246b2f1285cca36c6d949cae4b162ec2bdde304fb100b6e926c298a3bbbd6c29"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_musllinux_aarch64.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896249"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.linux-x64"]
+checksum = "sha256:dcddc44b6151ccd855a9a3c8fcdb00e897bb872ec9f4908b1b708b16eaaaa114"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_linux.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896135"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.linux-x64-baseline"]
+checksum = "sha256:dcddc44b6151ccd855a9a3c8fcdb00e897bb872ec9f4908b1b708b16eaaaa114"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_linux.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896135"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.linux-x64-musl"]
+checksum = "sha256:66358aac681cf9adc2bea09bdf200d45c6ff59b5084e655f9ea1eb53c9ea3140"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_musllinux.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896227"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:66358aac681cf9adc2bea09bdf200d45c6ff59b5084e655f9ea1eb53c9ea3140"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_musllinux.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896227"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.macos-arm64"]
+checksum = "sha256:2b5251788b36fcbc476568b4eea8cb239f0a775759456f2ff9344a437c52f000"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_macos.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896205"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.macos-x64"]
+checksum = "sha256:2b5251788b36fcbc476568b4eea8cb239f0a775759456f2ff9344a437c52f000"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_macos.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896205"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.macos-x64-baseline"]
+checksum = "sha256:2b5251788b36fcbc476568b4eea8cb239f0a775759456f2ff9344a437c52f000"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_macos.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896205"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.windows-x64"]
+checksum = "sha256:f1c71e5b651b51161be000c640469d10ea2e0a6ecbb1782fb33a6945c9f145a4"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_win_x86.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896309"
+provenance = "github-attestations"
+
+[tools.yt-dlp."platforms.windows-x64-baseline"]
+checksum = "sha256:f1c71e5b651b51161be000c640469d10ea2e0a6ecbb1782fb33a6945c9f145a4"
+url = "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp_win_x86.zip"
+url_api = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/assets/663896309"
+provenance = "github-attestations"
+
 [[tools.zig]]
 version = "0.17.0"
 backend = "core:zig"

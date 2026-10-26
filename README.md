@@ -124,6 +124,33 @@ connects post-boot (it may miss devices that appear after starting):
 sudo launchctl kickstart -k system/com.kanata.daemon
 ```
 
+## Keybindings
+
+### AeroSpace (window manager)
+
+| Action | Keys |
+|--------|------|
+| Focus window left / down / up / right | `alt + h / j / k / l` |
+| Move window left / down / up / right (swap) | `alt + shift + h / j / k / l` |
+| Join with neighbor window | `alt + ctrl + h / j / k / l` |
+| Enter resize mode | `alt + r` |
+| Resize in resize mode (width / height) | `h / l` / `j / k` |
+| Leave resize mode | `esc` or `enter` |
+| Switch workspace 1–5 | `alt + 1..5` |
+| Move window to workspace 1–5 | `alt + shift + 1..5` |
+
+### herdr (terminal multiplexer)
+
+The prefix is `ctrl + space`.
+
+| Action | Keys |
+|--------|------|
+| Focus pane left / down / up / right | `prefix + h / j / k / l` (default) |
+| Move (swap) pane left / down / up / right | `prefix + shift + h / j / k / l` (default) |
+| Resize mode | `prefix + r` (default) |
+| Fullscreen (zoom) pane | `prefix + z` (default) |
+| Split pane side by side / stacked | `prefix + v` / `prefix + -` |
+
 ## Managed settings
 
 | Package     | Links into                       |

@@ -67,6 +67,7 @@ lockfile = true
 "~/.config/borders" = { source = "~/dotfiles/borders", mode = "symlink" }
 "~/.config/fnox/config.toml" = { source = "~/dotfiles/fnox/config.toml", mode = "symlink" }
 "~/.config/ghostty" = { source = "~/dotfiles/ghostty", mode = "symlink" }
+"~/.config/herdr/config.toml" = { source = "~/dotfiles/herdr/config.toml", mode = "symlink" }
 "~/.gitconfig" = { source = "~/dotfiles/git/.gitconfig", mode = "symlink" }
 "~/.config/kanata" = { source = "~/dotfiles/kanata", mode = "symlink" }
 "~/.config/mise.toml" = { source = "~/dotfiles/mise/mise.toml", mode = "symlink" }

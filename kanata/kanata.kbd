@@ -48,7 +48,7 @@
 )
 
 (deflayer base
-  esc
+  @caps-esc
   q
   y u i
   @a @s @d @f g h @j @k @l @;
@@ -65,7 +65,7 @@
 ;; without waiting for the idle return to base. Longer hold-time than base
 ;; to avoid accidental shifts during fast typing.
 (deflayer nomods
-  esc
+  @caps-esc
   q
   y u i
   a s @dsft f g h j @ksft l ;
@@ -98,6 +98,9 @@
 )
 
 (defalias
+  ;; Caps Lock → Escape.
+  caps-esc esc
+
   tap (multi
     (layer-switch nomods)
     (on-idle-fakekey to-base tap 20)

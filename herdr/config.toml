@@ -1,0 +1,14 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+space"
+
+[ui.sound]
+enabled = false
+
+[ui]
+status_indicators = "dots"
+
+[theme]
+name = "catppuccin"
+auto_switch = false

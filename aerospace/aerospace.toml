@@ -56,25 +56,21 @@ outer.top        = [{ monitor.secondary = 42 }, 8]
 outer.right      = [{ monitor.secondary = 12 }, 8]
 
 [mode.main.binding]
-alt-left = 'focus left'
-alt-down = 'focus down'
-alt-up = 'focus up'
-alt-right = 'focus right'
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
 
-alt-shift-left = 'move left'
-alt-shift-down = 'move down'
-alt-shift-up = 'move up'
-alt-shift-right = 'move right'
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
 
 alt-ctrl-h = 'join-with left'
 alt-ctrl-j = 'join-with down'
 alt-ctrl-k = 'join-with up'
 alt-ctrl-l = 'join-with right'
 
-alt-h = 'resize width -50'
-alt-l = 'resize width +50'
-alt-k = 'resize height -50'
-alt-j = 'resize height +50'
 
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
@@ -98,5 +94,13 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
 alt-q = 'close'
 alt-enter = 'exec-and-forget open -na Ghostty'
-alt-r = 'flatten-workspace-tree'
+alt-r = 'mode resize'
 alt-shift-r = 'reload-config'
+
+[mode.resize.binding]
+h = 'resize width -50'
+l = 'resize width +50'
+k = 'resize height -50'
+j = 'resize height +50'
+esc = 'mode main'
+enter = 'mode main'

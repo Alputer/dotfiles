@@ -10,5 +10,5 @@ enabled = false
 status_indicators = "dots"
 
 [theme]
-name = "catppuccin"
+name = "tokyo-night"
 auto_switch = false

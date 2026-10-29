@@ -1,5 +1,5 @@
 # Ghostty configuration. See https://ghostty.org/docs/config
-theme = Atom One Dark
+theme = TokyoNight
 font-family = IosevkaTerm Nerd Font Mono
 font-size = 18
 background-opacity = 0.85

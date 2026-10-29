@@ -5,7 +5,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
-export PAGER="less"
+export PAGER="delta"
 export BROWSER="open"
 
 # mise (installed via https://mise.run)

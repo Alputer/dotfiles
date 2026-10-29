@@ -597,6 +597,56 @@ checksum = "sha256:a24808cb202318fa1c3bbee0c6c6887fe1225fe899d7b687a0ddd939bd657
 url = "https://github.com/apple/container/releases/download/1.5.0/container-1.5.0-installer-signed.pkg"
 url_api = "https://api.github.com/repos/apple/container/releases/assets/597136570"
 
+[[tools.delta]]
+version = "0.20.1"
+backend = "aqua:dandavison/delta"
+specifiers = ["latest"]
+
+[tools.delta."platforms.linux-arm64"]
+checksum = "sha256:da7f4338f593572ff426ae153e0870e2fdc72729416eff551b40cdeb67940db8"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610499593"
+
+[tools.delta."platforms.linux-arm64-musl"]
+checksum = "sha256:da7f4338f593572ff426ae153e0870e2fdc72729416eff551b40cdeb67940db8"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610499593"
+
+[tools.delta."platforms.linux-x64"]
+checksum = "sha256:50f08c879f84c81ceb220e476491a7f492d2c9c671e79918cc44badf961a6240"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610498121"
+
+[tools.delta."platforms.linux-x64-baseline"]
+checksum = "sha256:50f08c879f84c81ceb220e476491a7f492d2c9c671e79918cc44badf961a6240"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610498121"
+
+[tools.delta."platforms.linux-x64-musl"]
+checksum = "sha256:69dcb4043f55c29118f408c6efd30115e0a4e0a6709253343b8c8fa814ab4a31"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610498263"
+
+[tools.delta."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:69dcb4043f55c29118f408c6efd30115e0a4e0a6709253343b8c8fa814ab4a31"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610498263"
+
+[tools.delta."platforms.macos-arm64"]
+checksum = "sha256:bc1839cea69288d4673a24faffbb825d408ca907e0f7d33b1678c9e6cdd5e58e"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610498923"
+
+[tools.delta."platforms.windows-x64"]
+checksum = "sha256:c9af7484b33f1dbc1312a892fc7d5753a6d3365140a4000d49e575a2de742c25"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610501426"
+
+[tools.delta."platforms.windows-x64-baseline"]
+checksum = "sha256:c9af7484b33f1dbc1312a892fc7d5753a6d3365140a4000d49e575a2de742c25"
+url = "https://github.com/dandavison/delta/releases/download/0.20.1/delta-0.20.1-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/dandavison/delta/releases/assets/610501426"
+
 [[tools.deno]]
 version = "2.9.7"
 backend = "core:deno"
@@ -645,6 +695,66 @@ url = "https://dl.deno.land/release/v2.9.7/deno-x86_64-pc-windows-msvc.zip"
 [tools.deno."platforms.windows-x64-baseline"]
 checksum = "sha256:a0c3101b4158d1dfb7d6a78a7bf0f3de80c96bb423c152beec8beb22786f2238"
 url = "https://dl.deno.land/release/v2.9.7/deno-x86_64-pc-windows-msvc.zip"
+
+[[tools.difftastic]]
+version = "0.71.0"
+backend = "aqua:Wilfred/difftastic"
+specifiers = ["latest"]
+
+[tools.difftastic."platforms.linux-arm64"]
+checksum = "sha256:5f046098b36ff985d0f99fec6f22cf74961db60386ff9d40df39fd99660aae2c"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573540796"
+
+[tools.difftastic."platforms.linux-arm64-musl"]
+checksum = "sha256:5f046098b36ff985d0f99fec6f22cf74961db60386ff9d40df39fd99660aae2c"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573540796"
+
+[tools.difftastic."platforms.linux-x64"]
+checksum = "sha256:61aea5394a53c56f144637cf39b3a0c0dafa27769731745e5851ff276e6478da"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573539079"
+
+[tools.difftastic."platforms.linux-x64-baseline"]
+checksum = "sha256:61aea5394a53c56f144637cf39b3a0c0dafa27769731745e5851ff276e6478da"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573539079"
+
+[tools.difftastic."platforms.linux-x64-musl"]
+checksum = "sha256:0a65e6715df992b0adae012e606bd9cc74fa6cfe90eaf13bbae165a0a19b3086"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573541111"
+
+[tools.difftastic."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:0a65e6715df992b0adae012e606bd9cc74fa6cfe90eaf13bbae165a0a19b3086"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573541111"
+
+[tools.difftastic."platforms.macos-arm64"]
+checksum = "sha256:92acf8890543b6d6f436a87a7a5ec64f82a4b8dbe3a7e564c1e5cbfe60823bc7"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573540714"
+
+[tools.difftastic."platforms.macos-x64"]
+checksum = "sha256:390b5299b0bc5059b5617f448eb1f3cb42c689933258fc57770c24d257a5d8a8"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573540008"
+
+[tools.difftastic."platforms.macos-x64-baseline"]
+checksum = "sha256:390b5299b0bc5059b5617f448eb1f3cb42c689933258fc57770c24d257a5d8a8"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573540008"
+
+[tools.difftastic."platforms.windows-x64"]
+checksum = "sha256:9a979f9d96d739625a0fe69317f3197cc7bcef663a6d7195197d6c9bf96ed6f5"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573539441"
+
+[tools.difftastic."platforms.windows-x64-baseline"]
+checksum = "sha256:9a979f9d96d739625a0fe69317f3197cc7bcef663a6d7195197d6c9bf96ed6f5"
+url = "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/Wilfred/difftastic/releases/assets/573539441"
 
 [[tools.docker-cli]]
 version = "29.9.0"
@@ -1232,6 +1342,66 @@ url_api = "https://api.github.com/repos/herdrdev/herdr/releases/assets/640898234
 checksum = "sha256:d2c6c9c971c43a0bfdde8c692a9a1a7a45c3e4807cd01ae45662b4734fac1cbf"
 url = "https://github.com/herdrdev/herdr/releases/download/v0.9.5/herdr-windows-x86_64.zip"
 url_api = "https://api.github.com/repos/herdrdev/herdr/releases/assets/640898234"
+
+[[tools.hunk]]
+version = "0.24.1"
+backend = "aqua:modem-dev/hunk"
+specifiers = ["latest"]
+
+[tools.hunk."platforms.linux-arm64"]
+checksum = "sha256:ab49c8aba82c3c9872f1c5eefd96d1c4c2491e5b80647f97b2e81fc6c4676deb"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741220"
+
+[tools.hunk."platforms.linux-arm64-musl"]
+checksum = "sha256:ab49c8aba82c3c9872f1c5eefd96d1c4c2491e5b80647f97b2e81fc6c4676deb"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741220"
+
+[tools.hunk."platforms.linux-x64"]
+checksum = "sha256:4b8c98f8d97745499916cc1e1d2f27ffd258c6d6358dd4532f61e41c5eb19692"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741222"
+
+[tools.hunk."platforms.linux-x64-baseline"]
+checksum = "sha256:4b8c98f8d97745499916cc1e1d2f27ffd258c6d6358dd4532f61e41c5eb19692"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741222"
+
+[tools.hunk."platforms.linux-x64-musl"]
+checksum = "sha256:4b8c98f8d97745499916cc1e1d2f27ffd258c6d6358dd4532f61e41c5eb19692"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741222"
+
+[tools.hunk."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:4b8c98f8d97745499916cc1e1d2f27ffd258c6d6358dd4532f61e41c5eb19692"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741222"
+
+[tools.hunk."platforms.macos-arm64"]
+checksum = "sha256:5f9afd41d825e2f87958b0702e779e52d38207c0b42d5316efe54218f35b4d7d"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741225"
+
+[tools.hunk."platforms.macos-x64"]
+checksum = "sha256:8014b3eb7389c78767dc0f51ea07ff24c773fa7cd5d432811e881b3359d99489"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-darwin-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741223"
+
+[tools.hunk."platforms.macos-x64-baseline"]
+checksum = "sha256:8014b3eb7389c78767dc0f51ea07ff24c773fa7cd5d432811e881b3359d99489"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-darwin-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741223"
+
+[tools.hunk."platforms.windows-x64"]
+checksum = "sha256:77433c296e4e2a96bd3bec57cab44bd185183997972f796e1649e5fc50c3f6a3"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-windows-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741244"
+
+[tools.hunk."platforms.windows-x64-baseline"]
+checksum = "sha256:77433c296e4e2a96bd3bec57cab44bd185183997972f796e1649e5fc50c3f6a3"
+url = "https://github.com/modem-dev/hunk/releases/download/v0.24.1/hunkdiff-windows-x64.tar.gz"
+url_api = "https://api.github.com/repos/modem-dev/hunk/releases/assets/673741244"
 
 [[tools.java]]
 version = "27.0.0+35"

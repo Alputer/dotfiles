@@ -2,5 +2,5 @@ gui:
   nerdFontsVersion: "3"
 git:
   diffRenderers:
-    - type: extDiff
-      command: difft --color=always
+    - colorArg: always
+      command: delta --dark --paging=never

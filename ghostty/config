@@ -2,7 +2,7 @@
 theme = TokyoNight
 font-family = IosevkaTerm Nerd Font Mono
 font-size = 18
-background-opacity = 0.85
+background-opacity = 0.9
 background-blur-radius = 6
 macos-titlebar-style = hidden
 window-padding-x = 14

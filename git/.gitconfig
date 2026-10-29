@@ -13,6 +13,7 @@
 	difft = "!git -c diff.external=difft diff"
 [merge]
 	conflictstyle = diff3
+	tool = nvimdiff
 [interactive]
 	diffFilter = delta --color-only
 [delta]

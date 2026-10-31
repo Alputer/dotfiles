@@ -119,10 +119,12 @@ lockfile = true
 "brew-cask:nikitabobko/tap/aerospace" = "latest"
 "brew-cask:bitwarden" = "latest"
 "brew-cask:brave-browser" = "latest"
+"brew-cask:discord" = "latest"
 "brew-cask:docker-desktop" = "latest"
 "brew-cask:figma" = "latest"
 "brew-cask:ghostty" = "latest"
 "brew-cask:maccy" = "latest"
+"brew-cask:mullvad-vpn" = "latest"
 "brew-cask:notion" = "latest"
 "brew-cask:obsidian" = "latest"
 "brew-cask:postman" = "latest"
@@ -151,6 +153,7 @@ apps = [
   "/Applications/WhatsApp.app",
   "/Applications/Bitwarden.app",
   "/Applications/Tailscale.app",
+  "/Applications/Mullvad VPN.app",
   "/Applications/Xcode.app",
   "/System/Applications/System Settings.app",
 ]

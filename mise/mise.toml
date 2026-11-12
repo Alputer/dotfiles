@@ -17,6 +17,7 @@ zig = "latest"
 awscli = "latest"
 circleci = "latest"
 gcloud = { version = "latest", depends = ["python"] }
+"github:googleworkspace/cli" = { version = "latest", bin = "gws" } # Google Workspace CLI
 terraform = "latest"
 kubectl = "latest"
 helm = "latest"

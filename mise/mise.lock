@@ -1972,6 +1972,11 @@ url = "https://nodejs.org/dist/v26.11.1/node-v26.11.1-win-x64.zip"
 checksum = "sha256:97f36a8a9684ff0d3e35758b4610fef5b628a5880e96f2ccc11240e5daf9934e"
 url = "https://nodejs.org/dist/v26.11.1/node-v26.11.1-win-x64.zip"
 
+[[tools."npm:playwright"]]
+version = "1.65.1"
+backend = "npm:playwright"
+specifiers = ["latest"]
+
 [[tools.pi]]
 version = "1.3.0"
 backend = "aqua:earendil-works/pi"
